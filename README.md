@@ -1,6 +1,3 @@
-# fly-in
-
-
 <p align="center">
   <img src="https://github.com/alizealebaron/alizealebaron/blob/main/assets/fly-in.png" width="120"/>
 </p>
