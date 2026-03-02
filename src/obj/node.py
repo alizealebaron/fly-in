@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/02 13:06:09 by alebaron                                #
+# @update   : 2026/03/02 18:22:29 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,9 +19,10 @@
 
 
 from pydantic import BaseModel, Field, ValidationError
-from src.obj.connexion import Connexion
 from src.obj.drone import Drone
 from typing import Optional
+from typing_extensions import Self
+import re
 
 
 # +-------------------------------------------------------------------------+
@@ -35,8 +36,8 @@ class Node(BaseModel):
     # +---------------------------------------------------------------------+
 
     name: str = Field(min_length=1)
-    x: int = Field(ge=0)
-    y: int = Field(ge=0)
+    x: int
+    y: int
     color: Optional[str] = Field(None, min_length=1)
     zone: Optional[str] = Field(default="normal", min_length=1)
     max_drones: Optional[int] = Field(default=1, ge=0)
@@ -48,7 +49,3 @@ class Node(BaseModel):
 
     def get_coord(self) -> tuple:
         return (self.x, self.y)
-
-    # +---------------------------------------------------------------------+
-    # |                              Methods                                |
-    # +---------------------------------------------------------------------+

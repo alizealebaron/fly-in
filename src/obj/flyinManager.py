@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/02 13:06:39 by alebaron                                #
+# @update   : 2026/03/02 18:06:08 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -22,6 +22,7 @@ from src.obj.node import Node
 from src.obj.drone import Drone
 from src.obj.connexion import Connexion
 import random
+
 
 # +-------------------------------------------------------------------------+
 # |                                  Class                                  |
@@ -36,9 +37,11 @@ class FlyinManager():
     def __init__(self, nb_drones: int):
 
         self.__nb_drones = nb_drones
-        self.__list_node = []
-        self.__list_drone = []
-        self.__lst_connexion = []
+        self.__start_hub = None
+        self.__end_hub = None
+        self.__list_node: list[Node] = []
+        self.__list_drone: list[Drone] = []
+        self.__lst_connexion: list[Connexion] = []
 
         self.generate_drones()
 
@@ -48,6 +51,12 @@ class FlyinManager():
 
     def get_nbDrones(self) -> int:
         return self.__nb_drones
+
+    def get_startHub(self) -> Node:
+        return self.__start_hub
+
+    def get_endHub(self) -> Node:
+        return self.__end_hub
 
     def get_listNode(self) -> list[Node]:
         return self.__list_node
@@ -59,6 +68,22 @@ class FlyinManager():
         return self.__lst_connexion
 
     # +---------------------------------------------------------------------+
+    # |                              Setter                                 |
+    # +---------------------------------------------------------------------+
+
+    def set_startHub(self, node: Node) -> bool:
+        if (type(node).__name__) == "Node":
+            self.__start_hub = node
+            return True
+        return False
+
+    def set_endHub(self, node: Node) -> bool:
+        if (type(node).__name__) == "Node":
+            self.__end_hub = node
+            return True
+        return False
+
+    # +---------------------------------------------------------------------+
     # |                         list_node methods                           |
     # +---------------------------------------------------------------------+
 
@@ -67,6 +92,13 @@ class FlyinManager():
             self.__list_node.append(node)
             return True
         return False
+
+    def check_dupplicated_name(self, name: str) -> bool:
+
+        for node in self.__list_node:
+            if node.name == name:
+                return False
+        return True
 
     # +---------------------------------------------------------------------+
     # |                              Methods                                |

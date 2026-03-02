@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/02 14:30:13 by alebaron                                #
+# @update   : 2026/03/02 18:30:01 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -55,33 +55,57 @@ def get_data(filename) -> FlyinManager:
     with open(filename, "r") as file:
         lines = file.read().splitlines()
 
-    # === Reading lines one by one ===
+    # === Initialisation of important variables ===
 
+    flyinManager = None
     num_line = 1
 
-    for line in lines:
+    # === Reading lines one by one ===
 
-        fly = None
+    for line in lines:
 
         # == Pass the comments ==
 
         if line.startswith("#") or line == "":
+            num_line += 1
             continue
-
 
         # == Rule 1 : First line must be the number of drones ==
 
-        if (fly is None):
-            if (re.search("^nb_drones: [0-9]+", line)):
-                # TODO: Initialiser lfy
+        if (flyinManager is None):
+            if (re.search("^nb_drones: [-0-9]+", line)):
+                line_split = line.split(": ")
+                nb_drone = int(line_split[1])
+                if (nb_drone < 1):
+                    exit_parsing_error("Number of drone must be greater "
+                                       "than 0.",
+                                       num_line)
+                flyinManager = FlyinManager(nb_drone)
+                num_line += 1
+                continue
             else:
                 exit_parsing_error("First line must be the number of "
-                                   "drones (E.g : \"nb_drones: 5\"")
+                                   "drones (E.g : \"nb_drones: 5\")",
+                                   num_line)
+
+        # == Find new nodes to create ==
+
+        line_split = line.split(" ")
+
+        try:
+            if ("hub" in line_split[0]):
+                check_and_create_node(flyinManager, line_split)
+            elif ("connection" in line_split[0]):
+                print("2")
+            else:
+                exit_parsing_error("Undefined line structure.", num_line)
+        except Exception as e:
+            exit_parsing_error(str(e), num_line)
 
         # == Moving on the next line ==
         num_line += 1
 
-    return fly
+    return flyinManager
 
 
 def check_file(filename: str) -> None:
@@ -110,8 +134,60 @@ def check_file(filename: str) -> None:
         exit_parsing_error(f"Unexcepted exception ({e}).")
 
 # +-------------------------------------------------------------------------+
+# |                        Check & Create functions                         |
+# +-------------------------------------------------------------------------+
+
+
+def check_and_create_node(flyingManager: FlyinManager, line: list[str]) -> None:
+
+    # === Checking for multiple start & end hub and incorrect hub ===
+
+    if (line[0] == "start_hub:"):
+        if (flyingManager.get_startHub() is not None):
+            raise ParsingError("There must be exactly one start_hub zone.")
+    elif (line[0] == "hub:"):
+        pass
+    elif (line[0] == "end_hub:"):
+        if (flyingManager.get_endHub() is not None):
+            raise ParsingError("There must be exactly one end_hub zone.")
+    else:
+        raise ParsingError("Undefined type of hub.")
+
+    # === Checking node validity ===
+
+    print(line)  # Debug
+
+    if (len(line) != 5):
+        raise ParsingError("Too many arguments for a zone "
+                           "(Don't use space in zone name).")
+
+    # == Verify that each zone have a unique name ==
+
+    if (flyingManager.check_dupplicated_name(line[1]) is False):
+        raise ParsingError("Each zone must have a unique name.")
+
+    # == Check if there is a space or a dash in the name ==
+
+    if (re.search("[ -]", line[1])):
+        raise ParsingError("Zone names can use any valid characters "
+                           "but dashes and spaces.")
+
+    # == Initilisation of first validated data ==
+
+    node_data = {
+        "name": line[1],
+        "x": line[2],
+        "y": line[3],
+        "lst_drones": []
+    }
+
+    # == Check if meta-data is valid ==
+
+
+# +-------------------------------------------------------------------------+
 # |                            Other functions                              |
 # +-------------------------------------------------------------------------+
 
-def exit_parsing_error(message: str) -> None:
-    exit_error(ParsingError(), message)
+
+def exit_parsing_error(message: str, nb_ligne: int) -> None:
+    exit_error(ParsingError(), message + f" [Line {nb_ligne}]")

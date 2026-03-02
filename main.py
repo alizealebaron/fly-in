@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/02 13:13:37 by alebaron                                #
+# @update   : 2026/03/02 14:40:36 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -40,7 +40,9 @@ def main() -> None:
 
     # === Parsing Data ===
 
-    flyinManager = parsing_data()
+    flyinManager = parsing_data(argv[1])
+
+    print(flyinManager.get_listDrone())
 
 
 if __name__ == "__main__":
