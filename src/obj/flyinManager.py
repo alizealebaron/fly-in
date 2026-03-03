@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/02 18:06:08 by alebaron                                #
+# @update   : 2026/03/03 13:26:37 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -110,12 +110,14 @@ class FlyinManager():
                      "TheGoofyOne", "TheDuckOne", "BATMAN", "TheHelminthOne",
                      "TheWorldEater", "TheSalty", "TheChaotic",
                      "TheTenno", "TheD4rkOne", "TheAnomaly", "TheVoidWalker",
-                     "TheSmartest"]
+                     "TheSmartest", "MasterKoala", "WidowMaker",
+                     "TheMwetLover"]
         lst_name = ["Timmy", "George", "Bob", "Tommy", "Billy", "Bill",
                     "Sofie", "Shimada", "Kevin", "Mickeal", "Titouan", "Henry",
                     "James", "Edward", "Victoria", "Alice", "Aurora", "Luna",
                     "Brigitte", "Donald", "Timothé", "Taylor", "Mudkip",
-                    "Boing", "Pouic"]
+                    "Boing", "Pouic", "Nono", "Sofia", "Allyn", "Nico",
+                    "Victor", "Ana", "Romain", "Benoît", "Enzo"]
 
         i = 0
         while (i < self.__nb_drones):
@@ -129,3 +131,62 @@ class FlyinManager():
             self.__list_drone.append(new_drone)
 
             i += 1
+
+    def to_string(self) -> str:
+        start_name = self.__start_hub.name if self.__start_hub else "None"
+        end_name = self.__end_hub.name if self.__end_hub else "None"
+
+        return (
+            f"╔{'═' * 30}╗\n"
+            f"║         FLYIN MANAGER        ║\n"
+            f"╠{'═' * 30}╣\n"
+            f"  ➤ Drones     : {self.__nb_drones}\n"
+            f"  ➤ Start Hub  : {start_name}\n"
+            f"  ➤ End Hub    : {end_name}\n"
+            f"  ➤ Nodes      : {len(self.__list_node)} element(s)\n"
+            f"  ➤ Connexions : {len(self.__lst_connexion)} element(s)\n"
+            f"  ➤ Drones List: {len(self.__list_drone)} active(s)\n"
+            f"╚{'═' * 30}╝"
+        )
+
+    def to_string_detail(self) -> str:
+        # === Section Nodes ===
+        nodes_str = "  Nodes List:\n"
+        if not self.__list_node:
+            nodes_str += "    (Empty)\n"
+        for node in self.__list_node:
+
+            nodes_str += (
+                f"    • {node.name:<20} "
+                f"(x:{node.x:>2}, y:{node.y:>2}) | "
+                f"Couleur: {node.color:<8} | "
+                f"Zone: {node.zone:<10} | "
+                f"Capacité: {len(node.lst_drones)}/{node.max_drones}\n"
+            )
+
+        # === Section Connexions ===
+        conn_str = "  Connexions List:\n"
+        if not self.__lst_connexion:
+            conn_str += "    (Empty)\n"
+        for conn in self.__lst_connexion:
+
+            conn_str += (
+                f"    • {conn.node1.name} <───> {conn.node2.name} "
+                f"(Max: {conn.max_link_capacity})\n"
+            )
+
+        # === Liste des drones ===
+
+        drone_str = "  Drone List:\n"
+        if not self.__list_drone:
+            drone_str += "    (Empty)\n"
+        for drone in self.__list_drone:
+
+            drone_str += (
+                f"    • {drone.name}\n"
+            )
+
+        header = f"╔{'═' * 80}╗\n║{'FLYIN MANAGER':^80}║\n╠{'═' * 80}╣"
+        footer = f"╚{'═' * 80}╝"
+
+        return f"{header}\n{nodes_str}\n{conn_str}\n{drone_str}{footer}"
