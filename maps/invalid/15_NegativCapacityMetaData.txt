@@ -1,9 +1,9 @@
-# Invalid Level 12: No space
+# Invalid Level 15: >Negativ meta data capacity
 nb_drones: 5
 
 start_hub: start 2 3 [color=green]
 hub: waypoint1 1 0 [color=blue]
-hub: waypoint2 2 0 [zone=restricted]
+hub: waypoint2 2 0 [zone=restricted max_drones=-1]
 end_hub: goal 3 0 [color=red]
 
 connection: start-waypoint1

@@ -1,4 +1,4 @@
-# Invalid Level 12: No space
+# Invalid Level 16: Three linked zone
 nb_drones: 5
 
 start_hub: start 2 3 [color=green]
@@ -6,6 +6,6 @@ hub: waypoint1 1 0 [color=blue]
 hub: waypoint2 2 0 [zone=restricted]
 end_hub: goal 3 0 [color=red]
 
-connection: start-waypoint1
+connection: start-waypoint1-waypoint2
 connection: waypoint1-waypoint2
 connection: waypoint2-goal
