@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/03 13:10:46 by alebaron                                #
+# @update   : 2026/03/05 15:29:24 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -53,5 +53,5 @@ if __name__ == "__main__":
         file = open("src/utils/interrupt.txt", "r", encoding='utf-8')
         content = file.read()
         print(content)
-    except Exception as e:
-        print(f"Error: {e}")
+    # except Exception as e:
+    #     print(f"Error: {e}")

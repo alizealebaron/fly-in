@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/03 13:26:37 by alebaron                                #
+# @update   : 2026/03/05 15:36:08 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -97,8 +97,43 @@ class FlyinManager():
 
         for node in self.__list_node:
             if node.name == name:
-                return False
-        return True
+                return True
+        return False
+
+    def get_node_by_name(self, name: str) -> Node | None:
+
+        for node in self.__list_node:
+            if node.name == name:
+                return node
+        return None
+
+    # +---------------------------------------------------------------------+
+    # |                      list_connexions methods                        |
+    # +---------------------------------------------------------------------+
+
+    def add_connexion(self, connexion: Connexion) -> bool:
+        if (type(connexion).__name__) == "Connexion":
+            self.__lst_connexion.append(connexion)
+            return True
+        return False
+
+    def check_dupplicated_connexion(self, new_connexion: Connexion) -> bool:
+
+        for connexion in self.__lst_connexion:
+
+            same_direction = (
+                connexion.node1 == new_connexion.node1
+                and connexion.node2 == new_connexion.node2
+            )
+            opposite_direction = (
+                connexion.node1 == new_connexion.node2
+                and connexion.node2 == new_connexion.node1
+            )
+
+            if same_direction or opposite_direction:
+                return True
+
+        return False
 
     # +---------------------------------------------------------------------+
     # |                              Methods                                |
@@ -111,13 +146,13 @@ class FlyinManager():
                      "TheWorldEater", "TheSalty", "TheChaotic",
                      "TheTenno", "TheD4rkOne", "TheAnomaly", "TheVoidWalker",
                      "TheSmartest", "MasterKoala", "WidowMaker",
-                     "TheMwetLover"]
+                     "TheMwetLover", "TheChaosAdorer"]
         lst_name = ["Timmy", "George", "Bob", "Tommy", "Billy", "Bill",
                     "Sofie", "Shimada", "Kevin", "Mickeal", "Titouan", "Henry",
                     "James", "Edward", "Victoria", "Alice", "Aurora", "Luna",
                     "Brigitte", "Donald", "Timothé", "Taylor", "Mudkip",
                     "Boing", "Pouic", "Nono", "Sofia", "Allyn", "Nico",
-                    "Victor", "Ana", "Romain", "Benoît", "Enzo"]
+                    "Victor", "Ana", "Romain", "Benoît", "Enzo", "Rémy"]
 
         i = 0
         while (i < self.__nb_drones):
@@ -132,30 +167,12 @@ class FlyinManager():
 
             i += 1
 
-    def to_string(self) -> str:
-        start_name = self.__start_hub.name if self.__start_hub else "None"
-        end_name = self.__end_hub.name if self.__end_hub else "None"
-
-        return (
-            f"╔{'═' * 30}╗\n"
-            f"║         FLYIN MANAGER        ║\n"
-            f"╠{'═' * 30}╣\n"
-            f"  ➤ Drones     : {self.__nb_drones}\n"
-            f"  ➤ Start Hub  : {start_name}\n"
-            f"  ➤ End Hub    : {end_name}\n"
-            f"  ➤ Nodes      : {len(self.__list_node)} element(s)\n"
-            f"  ➤ Connexions : {len(self.__lst_connexion)} element(s)\n"
-            f"  ➤ Drones List: {len(self.__list_drone)} active(s)\n"
-            f"╚{'═' * 30}╝"
-        )
-
     def to_string_detail(self) -> str:
         # === Section Nodes ===
         nodes_str = "  Nodes List:\n"
         if not self.__list_node:
             nodes_str += "    (Empty)\n"
         for node in self.__list_node:
-
             nodes_str += (
                 f"    • {node.name:<20} "
                 f"(x:{node.x:>2}, y:{node.y:>2}) | "
@@ -172,12 +189,12 @@ class FlyinManager():
 
             conn_str += (
                 f"    • {conn.node1.name} <───> {conn.node2.name} "
-                f"(Max: {conn.max_link_capacity})\n"
+                f"(Capacité: {len(conn.lst_drones)}/{conn.max_link_capacity})\n"
             )
 
         # === Liste des drones ===
 
-        drone_str = "  Drone List:\n"
+        drone_str = f"  Drone List ({self.__nb_drones}):\n"
         if not self.__list_drone:
             drone_str += "    (Empty)\n"
         for drone in self.__list_drone:

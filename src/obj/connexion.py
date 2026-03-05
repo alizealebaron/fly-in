@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/27 13:52:25 by alebaron                                #
-# @update   : 2026/03/02 13:04:39 by alebaron                                #
+# @update   : 2026/03/05 15:32:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,6 +20,7 @@
 
 from pydantic import BaseModel, Field, ValidationError
 from src.obj.node import Node
+from src.obj.drone import Drone
 from typing import Optional
 
 
@@ -36,13 +37,7 @@ class Connexion(BaseModel):
     node1: Node
     node2: Node
     max_link_capacity: Optional[int] = Field(default=1, ge=1)
-
-    # +---------------------------------------------------------------------+
-    # |                            Constructor                              |
-    # +---------------------------------------------------------------------+
-
-    def __init__(self):
-        pass
+    lst_drones: list[Drone]
 
     # +---------------------------------------------------------------------+
     # |                              Getter                                 |

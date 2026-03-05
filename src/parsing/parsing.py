@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/03 13:45:08 by alebaron                                #
+# @update   : 2026/03/05 15:36:33 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -39,6 +39,11 @@ def parsing_data(filename: str) -> FlyinManager:
     # === Start the reading of the file ===
 
     fly = get_data(filename)
+
+    # === Check that there is a start and end hub ===
+
+    if (fly.get_startHub() is None or fly.get_endHub() is None):
+        exit_parsing_error("The start hub or end hub is missing.", 0)
 
     # === Return the data with a flyinManager ===
 
@@ -99,6 +104,16 @@ def get_data(filename) -> FlyinManager:
             meta_data = []
             line_split = line.split(" ")
 
+        # == Verify the number of arguments ==
+
+        if ((len(line_split) != 4 and "hub" in line) or
+           (len(line_split) != 2 and "connection" in line)):
+            exit_parsing_error(f"Incorrect number of arguments "
+                               f"({len(line_split)}).",
+                               num_line)
+
+        # == Try to create a node or a connexion ==
+
         try:
             if ("hub" in line_split[0]):
                 check_and_create_node(flyinManager, line_split, meta_data)
@@ -127,23 +142,88 @@ def check_file(filename: str) -> None:
         or is a directory.
     """
     try:
-        open(filename, "r")
+        with open(filename, "r") as file:
+            lines = file.read().splitlines()
+        if (len(lines) == 0):
+            raise ParsingError("Empty files are not allowed.")
     except FileNotFoundError:
         exit_parsing_error(f"File \"{filename}\" not found. "
-                           "Check the path and try again.")
+                           "Check the path and try again.", 0)
     except PermissionError:
         exit_parsing_error(f"No permission to access {filename}."
-                           " Check your access rights.")
+                           " Check your access rights.", 0)
     except IsADirectoryError:
         exit_parsing_error(f"Expected a file, but got directory "
-                           f"{filename}. Please provide a file.")
+                           f"{filename}. Please provide a file.", 0)
+    except ParsingError as e:
+        exit_parsing_error(str(e), 0)
     except Exception as e:
-        exit_parsing_error(f"Unexcepted exception ({e}).")
+        exit_parsing_error(f"Unexcepted exception ({e}).", 0)
+
 
 # +-------------------------------------------------------------------------+
 # |                        Check & Create functions                         |
 # +-------------------------------------------------------------------------+
 
+
+def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
+                               meta_data: list[str]) -> None:
+
+    lst_node = line[1].split("-")
+
+    # === Verifying the validity of the connection ===
+
+    # == A connexion must connect two zone ==
+
+    if (len(lst_node) != 2):
+        raise ParsingError("A connexion must connect two zone.")
+
+    # == Both zones must already exist. ==
+
+    for node in lst_node:
+        if (flyingManager.get_node_by_name(node) is None):
+            raise ParsingError(f"Zone {node} does not exist and "
+                               f"cannot be connected.")
+
+    # == Recovery of both nodes ==
+
+    node1 = flyingManager.get_node_by_name(lst_node[0])
+    node2 = flyingManager.get_node_by_name(lst_node[1])
+
+    connexion_data = {
+        "node1": node1,
+        "node2": node2,
+        "lst_drones": []
+    }
+
+    # == Checking meta_data ==
+
+    for data in meta_data:
+        match = re.search("^[A-Za-z_]+=[\w]+$", data)
+        if (match):
+            data_split = data.split("=")
+            if (data.startswith("max_link_capacity")):
+                connexion_data["max_link_capacity"] = int(data_split[1])
+            else:
+                raise ParsingError(f"Invalid meta_data name ({data}).")
+        else:
+            raise ParsingError(f"Invalid meta_data format ({data}).")
+
+    # == Initialisation of the connexion ==
+
+    try:
+        new_connexion = Connexion(**connexion_data)
+    except ValidationError as e:
+        for error in e.errors():
+            raise ParsingError(f"{error['msg']} ({error['loc']}={error['input']})")
+
+    # == Checking whether the connection already exists ==
+
+    if (flyingManager.check_dupplicated_connexion(new_connexion)):
+        raise ParsingError(f"Connexion {new_connexion.node1.name}-"
+                           f"{new_connexion.node2.name} already exist.")
+
+    flyingManager.add_connexion(new_connexion)
 
 def check_and_create_node(flyingManager: FlyinManager, line: list[str],
                           meta_data: list[str]) -> None:
@@ -171,7 +251,7 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
 
     # == Verify that each zone have a unique name ==
 
-    if (flyingManager.check_dupplicated_name(line[1]) is False):
+    if (flyingManager.check_dupplicated_name(line[1])):
         raise ParsingError("Each zone must have a unique name.")
 
     # == Check if there is a space or a dash in the name ==
@@ -211,6 +291,9 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
         else:
             raise ParsingError(f"Invalid meta_data format ({data}).")
 
+    if (line[0] == "start_hub:" or line[0] == "end_hub:"):
+        node_data["max_drones"] = flyingManager.get_nbDrones()
+
     try:
         new_node = Node(**node_data)
     except ValidationError as e:
@@ -224,9 +307,6 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
     elif (line[0] == "end_hub:"):
         flyingManager.set_endHub(new_node)
 
-def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
-                          meta_data: list[str]) -> None:
-    pass
 
 # +-------------------------------------------------------------------------+
 # |                            Other functions                              |
