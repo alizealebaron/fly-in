@@ -7,10 +7,10 @@
 #                                                                            #
 # ************************************************************************** #
 # @name   : flyinManager.py                                                  #
-# @author : alebaron <alebaron@student.42lehavre.fr>                         #
+# @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/05 15:36:08 by alebaron                                #
+# @update   : 2026/03/06 13:02:06 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,9 +18,9 @@
 # +-------------------------------------------------------------------------+
 
 
-from src.obj.node import Node
-from src.obj.drone import Drone
-from src.obj.connexion import Connexion
+from src.models.node import Node
+from src.models.drone import Drone
+from src.models.connexion import Connexion
 import random
 
 

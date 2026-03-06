@@ -7,10 +7,10 @@
 #                                                                            #
 # ************************************************************************** #
 # @name   : parsing.py                                                       #
-# @author : alebaron <alebaron@student.42lehavre.fr>                         #
+# @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/05 15:36:33 by alebaron                                #
+# @update   : 2026/03/06 13:02:06 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,10 +19,10 @@
 
 from pydantic import ValidationError
 from src.utils.error import exit_error, ParsingError
-from src.obj.connexion import Connexion
-from src.obj.flyinManager import FlyinManager
-from src.obj.drone import Drone
-from src.obj.node import Node
+from src.models.connexion import Connexion
+from src.models.flyinManager import FlyinManager
+from src.models.drone import Drone
+from src.models.node import Node
 import re
 
 # +-------------------------------------------------------------------------+

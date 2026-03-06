@@ -6,11 +6,11 @@
 #         |_|   |_____| .fr         \_.____,*      (___/  (___/  (___/       #
 #                                                                            #
 # ************************************************************************** #
-# @name   : node.py                                                          #
-# @author : alebaron <alebaron@student.42lehavre.fr>                         #
+# @name   : connexion.py                                                     #
+# @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
-# @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/02 18:22:29 by alebaron                                #
+# @creation : 2026/02/27 13:52:25 by alebaron                                #
+# @update   : 2026/03/06 13:02:06 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,33 +19,34 @@
 
 
 from pydantic import BaseModel, Field, ValidationError
-from src.obj.drone import Drone
+from src.models.node import Node
+from src.models.drone import Drone
 from typing import Optional
-from typing_extensions import Self
-import re
 
 
 # +-------------------------------------------------------------------------+
 # |                                  Class                                  |
 # +-------------------------------------------------------------------------+
 
-class Node(BaseModel):
+class Connexion(BaseModel):
 
     # +---------------------------------------------------------------------+
     # |                             Attribute                               |
     # +---------------------------------------------------------------------+
 
-    name: str = Field(min_length=1)
-    x: int
-    y: int
-    color: Optional[str] = Field(None, min_length=1)
-    zone: Optional[str] = Field(default="normal", min_length=1)
-    max_drones: Optional[int] = Field(default=1, ge=0)
+    node1: Node
+    node2: Node
+    max_link_capacity: Optional[int] = Field(default=1, ge=1)
     lst_drones: list[Drone]
 
     # +---------------------------------------------------------------------+
     # |                              Getter                                 |
     # +---------------------------------------------------------------------+
 
-    def get_coord(self) -> tuple:
-        return (self.x, self.y)
+    # +---------------------------------------------------------------------+
+    # |                              Setter                                 |
+    # +---------------------------------------------------------------------+
+
+    # +---------------------------------------------------------------------+
+    # |                              Methods                                |
+    # +---------------------------------------------------------------------+
