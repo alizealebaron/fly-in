@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/06 13:02:06 by alebaron                                #
+# @update   : 2026/03/06 16:19:59 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -106,6 +106,23 @@ class FlyinManager():
             if node.name == name:
                 return node
         return None
+
+    def get_node_max_coord(self) -> tuple[int, int] | None:
+
+        if (len(self.__list_node) == 0):
+            return None
+
+        max_x = self.__list_node[0].x
+        max_y = self.__list_node[0].y
+
+        for node in self.__list_node:
+            if node.x > max_x:
+                max_x = node.x
+
+            if node.y > max_y:
+                max_y = node.y
+
+        return (max_x, max_y)
 
     # +---------------------------------------------------------------------+
     # |                      list_connexions methods                        |

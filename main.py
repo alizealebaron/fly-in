@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/06 13:33:19 by alebaron                                #
+# @update   : 2026/03/06 16:33:49 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -32,8 +32,6 @@ from src.view.graph_view import show_graph
 
 def main() -> None:
 
-    os.environ["QT_QPA_PLATFORM"] = "wayland"
-
     # === Get Main arguments ===
 
     argc = len(sys.argv)
@@ -46,11 +44,11 @@ def main() -> None:
 
     flyinManager = parsing_data(argv[1])
 
-    print(flyinManager.to_string_detail())
+    # print(flyinManager.to_string_detail())
 
     # === Afficher le graphique ===
 
-    show_graph(flyinManager)
+    show_graph(flyinManager, argv[1])
 
 
 if __name__ == "__main__":
