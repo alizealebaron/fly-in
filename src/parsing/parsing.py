@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/06 13:02:06 by alebaron                                #
+# @update   : 2026/03/17 15:19:21 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -44,6 +44,11 @@ def parsing_data(filename: str) -> FlyinManager:
 
     if (fly.get_startHub() is None or fly.get_endHub() is None):
         exit_parsing_error("The start hub or end hub is missing.", 0)
+
+    # === Put the drone on the start hub ===
+
+    for drone in fly.get_listDrone():
+        fly.get_startHub().add_drone(drone)
 
     # === Return the data with a flyinManager ===
 
@@ -106,8 +111,12 @@ def get_data(filename) -> FlyinManager:
 
         # == Verify the number of arguments ==
 
-        if ((len(line_split) != 4 and "hub" in line) or
-           (len(line_split) != 2 and "connection" in line)):
+        if (len(line_split) < 1):
+            exit_parsing_error(f"Incorrect number of arguments "
+                               f"({len(line_split)}).", num_line)
+
+        if ((len(line_split) != 4 and "hub" in line_split[0]) or
+           (len(line_split) != 2 and "connection" in line_split[0])):
             exit_parsing_error(f"Incorrect number of arguments "
                                f"({len(line_split)}).",
                                num_line)
@@ -199,7 +208,7 @@ def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
     # == Checking meta_data ==
 
     for data in meta_data:
-        match = re.search("^[A-Za-z_]+=[\w]+$", data)
+        match = re.search("^[A-Za-z_]+=[0-9A-Za-z_]+$", data)
         if (match):
             data_split = data.split("=")
             if (data.startswith("max_link_capacity")):
@@ -274,7 +283,7 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
     valid_zone = ["normal", "blocked", "restricted", "priority"]
 
     for data in meta_data:
-        match = re.search("^[A-Za-z_]+=[\w]+$", data)
+        match = re.search("^[A-Za-z_]+=[0-9A-Za-z_]+$", data)
         if (match):
             data_split = data.split("=")
             if (data.startswith("color")):

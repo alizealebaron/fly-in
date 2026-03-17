@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/06 13:02:06 by alebaron                                #
+# @update   : 2026/03/17 13:41:35 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -49,3 +49,13 @@ class Node(BaseModel):
 
     def get_coord(self) -> tuple:
         return (self.x, self.y)
+
+    # +---------------------------------------------------------------------+
+    # |                            lst drones                               |
+    # +---------------------------------------------------------------------+
+
+    def add_drone(self, drone: Drone) -> bool:
+        if len(self.lst_drones) < self.max_drones and self.zone != "blocked":
+            self.lst_drones.append(drone)
+            return True
+        return False

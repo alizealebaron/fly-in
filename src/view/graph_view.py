@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/06 13:02:33 by alebaron                                #
-# @update   : 2026/03/06 16:48:21 by alebaron                                #
+# @update   : 2026/03/17 10:57:47 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -55,9 +55,9 @@ def show_graph(flyinManager: FlyinManager, filename: str) -> None:
             node_colors.append("skyblue")
 
     for connexion in lst_connexion:
-        G.add_edge(lst_connexion[0].node1.name, lst_connexion[1].node2.name)
+        G.add_edge(connexion.node1.name, connexion.node2.name)
 
-    plt.figure(figsize=(5000, 5000))  # High size for print in fullscreen
+    plt.figure(figsize=(12, 12), dpi=100)
 
     nx.draw(
         G,
