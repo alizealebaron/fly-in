@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/24 16:27:24 by alebaron                                #
+# @update   : 2026/03/24 17:46:44 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -50,7 +50,7 @@ class Node(BaseModel):
     def get_coord(self) -> tuple:
         return (self.x, self.y)
 
-    def get_weight(self) -> int:
+    def get_weight(self) -> float:
         if self.zone == "restricted":
             return 2
         return 1

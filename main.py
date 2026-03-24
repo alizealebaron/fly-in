@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/24 17:04:50 by alebaron                                #
+# @update   : 2026/03/24 17:38:59 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -24,6 +24,7 @@ from src.algorithm.dijkstra import calcule_path
 from src.parsing.parsing import parsing_data
 from src.utils.error import exit_error
 from src.view.graph_view import show_graph
+from src.algorithm.moove_drone import find_the_way
 
 
 # +-------------------------------------------------------------------------+
@@ -46,17 +47,13 @@ def main() -> None:
 
     # print(flyinManager.to_string_detail())
 
-    # === Check that there is a path between the start and the end ===
+    # === Find a solution ===
 
-    path = calcule_path(flyinManager, flyinManager.get_startHub(), flyinManager.get_endHub())
-
-    for node in path:
-        print(f"{node.name} -> ", end="")
+    find_the_way(flyinManager)
 
     # === Print graphic view ===
 
-    show_graph(flyinManager, argv[1])
-
+    # show_graph(flyinManager, argv[1])
 
 
 if __name__ == "__main__":
