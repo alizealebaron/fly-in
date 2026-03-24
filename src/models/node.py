@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/17 13:41:35 by alebaron                                #
+# @update   : 2026/03/24 16:27:24 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -50,6 +50,11 @@ class Node(BaseModel):
     def get_coord(self) -> tuple:
         return (self.x, self.y)
 
+    def get_weight(self) -> int:
+        if self.zone == "restricted":
+            return 2
+        return 1
+
     # +---------------------------------------------------------------------+
     # |                            lst drones                               |
     # +---------------------------------------------------------------------+
@@ -59,3 +64,22 @@ class Node(BaseModel):
             self.lst_drones.append(drone)
             return True
         return False
+
+    # +---------------------------------------------------------------------+
+    # |                             Capacity                                |
+    # +---------------------------------------------------------------------+
+
+    def is_completed(self) -> bool:
+        return (self.max_drones == len(self.lst_drones))
+
+    # +---------------------------------------------------------------------+
+    # |                             Hashable                                |
+    # +---------------------------------------------------------------------+
+
+    def __eq__(self, other):
+        if not isinstance(other, Node):
+            return False
+        return self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)

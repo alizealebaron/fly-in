@@ -35,6 +35,7 @@
 - [github.com/Overtekk/Fly-in](https://github.com/Overtekk/Fly-in)
 - [sites.google.com/graphs-et-th%C3%A9orie-des-r%C3%A9seaux-en-langage-python](https://sites.google.com/view/aide-python/graphiques/graphs-et-th%C3%A9orie-des-r%C3%A9seaux-en-langage-python)
 - [matplotlib.org](https://matplotlib.org/stable/users/index)
+- [www.maths-cours.fr/algorithme-de-dijkstra-etape-par-etape](https://www.maths-cours.fr/methode/algorithme-de-dijkstra-etape-par-etape)
 
 
 **Contact :** alebaron@student.42lehavre.fr

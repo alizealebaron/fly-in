@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/06 16:19:59 by alebaron                                #
+# @update   : 2026/03/17 15:29:27 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -42,6 +42,7 @@ class FlyinManager():
         self.__list_node: list[Node] = []
         self.__list_drone: list[Drone] = []
         self.__lst_connexion: list[Connexion] = []
+        self.__nb_coups = 0
 
         self.generate_drones()
 
@@ -66,6 +67,9 @@ class FlyinManager():
 
     def get_listConnexion(self) -> list[Connexion]:
         return self.__lst_connexion
+
+    def get_nbCoups(self) -> int:
+        return self.__nb_coups
 
     # +---------------------------------------------------------------------+
     # |                              Setter                                 |

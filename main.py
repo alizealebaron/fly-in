@@ -10,17 +10,17 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/17 15:17:03 by alebaron                                #
+# @update   : 2026/03/24 16:29:20 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
 # |                               Importation                               |
 # +-------------------------------------------------------------------------+
 
+
 import os
 import sys
-from src.models.flyinManager import FlyinManager
-from src.models.node import Node
+from src.algorithm.dijkstra import calcule_path
 from src.parsing.parsing import parsing_data
 from src.utils.error import exit_error
 from src.view.graph_view import show_graph
@@ -46,9 +46,19 @@ def main() -> None:
 
     # print(flyinManager.to_string_detail())
 
-    # === Afficher le graphique ===
+    # === Use dijkstra algorithm ===
+
+    path = calcule_path(flyinManager, flyinManager.get_startHub(), flyinManager.get_endHub())
+
+    for node in path:
+        print(f"{node.name} -> ", end="")
+
+    print()
+
+    # === Print graphic view ===
 
     show_graph(flyinManager, argv[1])
+
 
 
 if __name__ == "__main__":

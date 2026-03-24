@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/06 13:02:33 by alebaron                                #
-# @update   : 2026/03/17 10:57:47 by alebaron                                #
+# @update   : 2026/03/24 16:41:23 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -57,16 +57,17 @@ def show_graph(flyinManager: FlyinManager, filename: str) -> None:
     for connexion in lst_connexion:
         G.add_edge(connexion.node1.name, connexion.node2.name)
 
-    plt.figure(figsize=(12, 12), dpi=100)
+    plt.figure(figsize=(20, 10), dpi=100)
 
     nx.draw(
         G,
         pos,
         with_labels=True,
         node_color=node_colors,
-        node_size=500,
-        font_weight='bold',
-        edge_color='gray'
+        node_size=450,
+        edge_color='gray',
+        font_size=8,
+        font_weight='light'
     )
 
     plt.title(filename)
