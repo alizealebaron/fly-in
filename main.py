@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/24 16:29:20 by alebaron                                #
+# @update   : 2026/03/24 17:04:50 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -46,14 +46,12 @@ def main() -> None:
 
     # print(flyinManager.to_string_detail())
 
-    # === Use dijkstra algorithm ===
+    # === Check that there is a path between the start and the end ===
 
     path = calcule_path(flyinManager, flyinManager.get_startHub(), flyinManager.get_endHub())
 
     for node in path:
         print(f"{node.name} -> ", end="")
-
-    print()
 
     # === Print graphic view ===
 

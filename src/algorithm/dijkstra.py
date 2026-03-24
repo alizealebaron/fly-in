@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 12:33:58 by alebaron                                #
-# @update   : 2026/03/24 16:37:04 by alebaron                                #
+# @update   : 2026/03/24 16:44:37 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -71,6 +71,7 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
         path.append(curr)
         curr = dict_parent.get(curr.name)
     return path[::-1]
+
 
 def get_neighbours(node: Node, lst_connections: list[Connexion]) -> set[Node]:
 

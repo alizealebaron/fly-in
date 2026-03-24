@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/17 15:19:21 by alebaron                                #
+# @update   : 2026/03/24 17:04:33 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,6 +18,7 @@
 # +-------------------------------------------------------------------------+
 
 from pydantic import ValidationError
+from src.algorithm.dijkstra import calcule_path
 from src.utils.error import exit_error, ParsingError
 from src.models.connexion import Connexion
 from src.models.flyinManager import FlyinManager
@@ -44,6 +45,13 @@ def parsing_data(filename: str) -> FlyinManager:
 
     if (fly.get_startHub() is None or fly.get_endHub() is None):
         exit_parsing_error("The start hub or end hub is missing.", 0)
+
+    # === Check that there is a path between the start and the end ===
+
+    path = calcule_path(fly, fly.get_startHub(), fly.get_endHub())
+
+    if (fly.get_startHub() not in path):
+        exit_parsing_error("There is no path between the start and the end.", 0)
 
     # === Put the drone on the start hub ===
 
