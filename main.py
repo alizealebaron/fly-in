@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/25 13:17:05 by alebaron                                #
+# @update   : 2026/03/25 14:04:53 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -45,7 +45,7 @@ def main() -> None:
 
     flyinManager = parsing_data(argv[1])
 
-    print(flyinManager.to_string_detail())
+    # print(flyinManager.to_string_detail())
 
     # === Find a solution ===
 

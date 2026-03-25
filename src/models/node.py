@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/24 17:46:44 by alebaron                                #
+# @update   : 2026/03/25 13:43:31 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -53,6 +53,8 @@ class Node(BaseModel):
     def get_weight(self) -> float:
         if self.zone == "restricted":
             return 2
+        if self.zone == "priority":
+            return 0.5
         return 1
 
     # +---------------------------------------------------------------------+

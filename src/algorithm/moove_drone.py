@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 16:49:54 by alebaron                                #
-# @update   : 2026/03/25 13:14:00 by alebaron                                #
+# @update   : 2026/03/25 14:03:23 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -36,6 +36,31 @@ def find_the_way(fly: FlyinManager) -> None:
 
         str_print = ""
         mooved_drone = set()
+
+        # +---------------------------------------------------------------------+
+        # | PASSE 1: Traiter les drones en attente sur les connexions           |
+        # +---------------------------------------------------------------------+
+
+        for connexion in fly.get_listConnexion():
+            for drone in connexion.lst_drones.copy():
+                if drone in mooved_drone:
+                    continue
+
+                restricted_node = fly.get_node_by_name(drone.next_restricted_node)
+                
+                # Essayer d'ajouter le drone à la zone restricted
+                if restricted_node is not None and restricted_node.add_drone(drone) is True:
+                    mooved_drone.add(drone)
+                    connexion.lst_drones.remove(drone)
+                    str_print += f"{drone.name}-{restricted_node.name} "
+                    # Réinitialiser les flags
+                    drone.is_on_connection = False
+                    drone.waiting_connection_nodes = None
+
+        # +---------------------------------------------------------------------+
+        # | PASSE 2: Traiter les drones dans les nœuds                          |
+        # +---------------------------------------------------------------------+
+
         checked_node = set()
         count = 0
         priority_queue = []
@@ -59,10 +84,28 @@ def find_the_way(fly: FlyinManager) -> None:
                 if len(path) == 1:
                     continue
 
-                if path[1].add_drone(drone) is True:
+                next_node = path[1]
+
+                # Cas 1: Le prochain nœud est une zone restricted
+                if next_node.zone == "restricted":
+                    connexion = fly.get_connexion_between(node, next_node)
+
+                    # Vérifier si la connexion existe et a de la capacité
+                    if connexion is not None and connexion.add_drone(drone) is True:
+                        mooved_drone.add(drone)
+                        node.lst_drones.remove(drone)
+
+                        # Marquer le drone comme étant en attente sur la connexion
+                        drone.is_on_connection = True
+                        drone.waiting_connection_nodes = (node.name, next_node.name)
+                        drone.next_restricted_node = next_node.name
+                    continue
+
+                # Cas 2: Déplacement normal
+                if next_node.add_drone(drone) is True:
                     mooved_drone.add(drone)
                     node.lst_drones.remove(drone)
-                    str_print += f"{drone.name}-{path[1].name} "
+                    str_print += f"{drone.name}-{next_node.name} "
 
             # Ajout des voisins de la node dans la queue
 

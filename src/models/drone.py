@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:20:11 by alebaron                                #
-# @update   : 2026/03/25 13:36:46 by alebaron                                #
+# @update   : 2026/03/25 13:50:20 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -19,6 +19,7 @@
 
 
 from pydantic import BaseModel, Field
+from typing import Optional
 
 
 # +-------------------------------------------------------------------------+
@@ -32,6 +33,9 @@ class Drone(BaseModel):
     # +---------------------------------------------------------------------+
 
     name: str = Field(min_length=1)
+    is_on_connection: bool = Field(default=False)
+    waiting_connection_nodes: Optional[tuple[str, str]] = Field(default=None)
+    next_restricted_node: Optional[str] = Field(default=None)
 
     # +---------------------------------------------------------------------+
     # |                             Hashable                                |

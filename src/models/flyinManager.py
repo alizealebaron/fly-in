@@ -156,6 +156,14 @@ class FlyinManager():
 
         return False
 
+    def get_connexion_between(self, node1: Node, node2: Node) -> Connexion | None:
+        """Retourne la connexion entre deux nœuds, peu importe la direction."""
+        for connexion in self.__lst_connexion:
+            if (connexion.node1 == node1 and connexion.node2 == node2) or \
+               (connexion.node1 == node2 and connexion.node2 == node1):
+                return connexion
+        return None
+
     # +---------------------------------------------------------------------+
     # |                              Methods                                |
     # +---------------------------------------------------------------------+
