@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 16:49:54 by alebaron                                #
-# @update   : 2026/03/24 17:59:35 by alebaron                                #
+# @update   : 2026/03/25 13:14:00 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -36,6 +36,7 @@ def find_the_way(fly: FlyinManager) -> None:
 
         str_print = ""
         mooved_drone = set()
+        checked_node = set()
         count = 0
         priority_queue = []
 
@@ -66,12 +67,18 @@ def find_the_way(fly: FlyinManager) -> None:
             # Ajout des voisins de la node dans la queue
 
             for connexion in fly.get_listConnexion():
-                if connexion.node1 == node:
+                new_node = None
+
+                if connexion.node1 == node and connexion.node2 not in checked_node:
+                    new_node = connexion.node2
+
+                elif connexion.node2 == node and connexion.node1 not in checked_node:
+                    new_node = connexion.node1
+
+                if new_node is not None:
                     count += 1
-                    heapq.heappush(priority_queue, (count, connexion.node2))
-                elif connexion.node2 == node:
-                    count += 1
-                    heapq.heappush(priority_queue, (count, connexion.node1))
+                    heapq.heappush(priority_queue, (count, new_node))
+                    checked_node.add(new_node)
 
         print(f"Turn n°{nb_turn}: {str_print}")
         nb_turn += 1

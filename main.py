@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/24 17:38:59 by alebaron                                #
+# @update   : 2026/03/25 13:17:05 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -45,7 +45,7 @@ def main() -> None:
 
     flyinManager = parsing_data(argv[1])
 
-    # print(flyinManager.to_string_detail())
+    print(flyinManager.to_string_detail())
 
     # === Find a solution ===
 
@@ -57,12 +57,12 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        os.system("clear")
-        file = open("src/utils/interrupt.txt", "r", encoding='utf-8')
-        content = file.read()
-        print(content)
+    # try:
+    main()
+    # except KeyboardInterrupt:
+    #     os.system("clear")
+    #     file = open("src/utils/interrupt.txt", "r", encoding='utf-8')
+    #     content = file.read()
+    #     print(content)
     # except Exception as e:
     #     print(f"Error: {e}")
