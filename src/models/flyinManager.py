@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/17 15:29:27 by alebaron                                #
+# @update   : 2026/03/26 11:23:34 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -156,7 +156,10 @@ class FlyinManager():
 
         return False
 
-    def get_connexion_between(self, node1: Node, node2: Node) -> Connexion | None:
+    def get_connexion_between(
+            self,
+            node1: Node,
+            node2: Node) -> Connexion | None:
         """Retourne la connexion entre deux nœuds, peu importe la direction."""
         for connexion in self.__lst_connexion:
             if (connexion.node1 == node1 and connexion.node2 == node2) or \
@@ -175,13 +178,14 @@ class FlyinManager():
                      "TheWorldEater", "TheSalty", "TheChaotic",
                      "TheTenno", "TheD4rkOne", "TheAnomaly", "TheVoidWalker",
                      "TheSmartest", "MasterKoala", "WidowMaker",
-                     "TheMwetLover", "TheChaosAdorer"]
+                     "TheMwetLover", "TheChaosAdorer", "TheTallestOne"]
         lst_name = ["Timmy", "George", "Bob", "Tommy", "Billy", "Bill",
                     "Sofie", "Shimada", "Kevin", "Mickeal", "Titouan", "Henry",
                     "James", "Edward", "Victoria", "Alice", "Aurora", "Luna",
                     "Brigitte", "Donald", "Timothé", "Taylor", "Mudkip",
                     "Boing", "Pouic", "Nono", "Sofia", "Allyn", "Nico",
-                    "Victor", "Ana", "Romain", "Benoît", "Enzo", "Rémy"]
+                    "Victor", "Ana", "Romain", "Benoît", "Enzo", "Rémy",
+                    "Thomas"]
 
         i = 0
         while (i < self.__nb_drones):
@@ -218,7 +222,8 @@ class FlyinManager():
 
             conn_str += (
                 f"    • {conn.node1.name} <───> {conn.node2.name} "
-                f"(Capacité: {len(conn.lst_drones)}/{conn.max_link_capacity})\n"
+                f"(Capacité: {len(conn.lst_drones)}/"
+                f"{conn.max_link_capacity})\n"
             )
 
         # === Liste des drones ===

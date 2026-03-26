@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 12:33:58 by alebaron                                #
-# @update   : 2026/03/24 17:18:47 by alebaron                                #
+# @update   : 2026/03/26 11:20:14 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -58,7 +58,10 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
             new_dist = act_dist + neighbor.get_weight()
 
             # Checking flow and distance constraints
-            if new_dist < dict_distances[neighbor.name] and neighbor.is_completed() is False and neighbor.zone != "blocked":
+            if (new_dist < dict_distances[neighbor.name] and
+               neighbor.is_completed() is False and
+               neighbor.zone != "blocked"):
+
                 count += 1
                 dict_distances[neighbor.name] = new_dist
                 dict_parent[neighbor.name] = act_node

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/26 10:27:51 by alebaron                                #
+# @update   : 2026/03/26 10:55:30 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,7 +20,6 @@
 try:
     import os
     import sys
-    from src.algorithm.dijkstra import calcule_path
     from src.parsing.parsing import parsing_data
     from src.utils.error import exit_error
     from src.view.graph_view import show_graph

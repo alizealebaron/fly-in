@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/24 17:04:33 by alebaron                                #
+# @update   : 2026/03/26 11:17:11 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -22,7 +22,6 @@ from src.algorithm.dijkstra import calcule_path
 from src.utils.error import exit_error, ParsingError
 from src.models.connexion import Connexion
 from src.models.flyinManager import FlyinManager
-from src.models.drone import Drone
 from src.models.node import Node
 import re
 
@@ -51,7 +50,8 @@ def parsing_data(filename: str) -> FlyinManager:
     path = calcule_path(fly, fly.get_startHub(), fly.get_endHub())
 
     if (fly.get_startHub() not in path):
-        exit_parsing_error("There is no path between the start and the end.", 0)
+        exit_parsing_error("There is no path between the start and the "
+                           "end.", 0)
 
     # === Put the drone on the start hub ===
 
@@ -232,7 +232,8 @@ def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
         new_connexion = Connexion(**connexion_data)
     except ValidationError as e:
         for error in e.errors():
-            raise ParsingError(f"{error['msg']} ({error['loc']}={error['input']})")
+            raise ParsingError(f"{error['msg']} ({error['loc']}="
+                               f"{error['input']})")
 
     # == Checking whether the connection already exists ==
 
@@ -241,6 +242,7 @@ def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
                            f"{new_connexion.node2.name} already exist.")
 
     flyingManager.add_connexion(new_connexion)
+
 
 def check_and_create_node(flyingManager: FlyinManager, line: list[str],
                           meta_data: list[str]) -> None:
@@ -315,7 +317,8 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
         new_node = Node(**node_data)
     except ValidationError as e:
         for error in e.errors():
-            raise ParsingError(f"{error['msg']} ({error['loc']}={error['input']})")
+            raise ParsingError(f"{error['msg']} ({error['loc']}="
+                               f"{error['input']})")
 
     flyingManager.add_node(new_node)
 

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:52:25 by alebaron                                #
-# @update   : 2026/03/17 15:27:20 by alebaron                                #
+# @update   : 2026/03/26 11:17:31 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,7 +18,7 @@
 # +-------------------------------------------------------------------------+
 
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field
 from src.models.node import Node
 from src.models.drone import Drone
 from typing import Optional

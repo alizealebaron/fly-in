@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/26 10:53:30 by alebaron                                #
+# @update   : 2026/03/26 11:18:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,12 +18,10 @@
 # +-------------------------------------------------------------------------+
 
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field
 from src.models.drone import Drone
 from src.utils.color import get_dict_color
 from typing import Optional
-from typing_extensions import Self
-import re
 
 
 # +-------------------------------------------------------------------------+

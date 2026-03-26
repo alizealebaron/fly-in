@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/06 13:02:33 by alebaron                                #
-# @update   : 2026/03/24 16:41:23 by alebaron                                #
+# @update   : 2026/03/26 11:15:46 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,7 +21,6 @@
 from src.models.flyinManager import FlyinManager
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-import numpy as np
 import networkx as nx
 
 
