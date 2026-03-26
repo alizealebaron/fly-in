@@ -10,21 +10,25 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/25 14:04:53 by alebaron                                #
+# @update   : 2026/03/26 10:27:51 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
 # |                               Importation                               |
 # +-------------------------------------------------------------------------+
 
-
-import os
-import sys
-from src.algorithm.dijkstra import calcule_path
-from src.parsing.parsing import parsing_data
-from src.utils.error import exit_error
-from src.view.graph_view import show_graph
-from src.algorithm.moove_drone import find_the_way
+try:
+    import os
+    import sys
+    from src.algorithm.dijkstra import calcule_path
+    from src.parsing.parsing import parsing_data
+    from src.utils.error import exit_error
+    from src.view.graph_view import show_graph
+    from src.algorithm.moove_drone import find_the_way
+except Exception:
+    print("ImportationError: Some package are not present. Please do "
+          "`make all` to install a python env.")
+    sys.exit(2)
 
 
 # +-------------------------------------------------------------------------+
@@ -53,16 +57,16 @@ def main() -> None:
 
     # === Print graphic view ===
 
-    # show_graph(flyinManager, argv[1])
+    show_graph(flyinManager, argv[1])
 
 
 if __name__ == "__main__":
-    # try:
-    main()
-    # except KeyboardInterrupt:
-    #     os.system("clear")
-    #     file = open("src/utils/interrupt.txt", "r", encoding='utf-8')
-    #     content = file.read()
-    #     print(content)
-    # except Exception as e:
-    #     print(f"Error: {e}")
+    try:
+        main()
+    except KeyboardInterrupt:
+        os.system("clear")
+        file = open("src/utils/interrupt.txt", "r", encoding='utf-8')
+        content = file.read()
+        print(content)
+    except Exception as e:
+        print(f"Error: {e}")

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/25 13:43:31 by alebaron                                #
+# @update   : 2026/03/26 10:53:30 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,6 +20,7 @@
 
 from pydantic import BaseModel, Field, ValidationError
 from src.models.drone import Drone
+from src.utils.color import get_dict_color
 from typing import Optional
 from typing_extensions import Self
 import re
@@ -56,6 +57,14 @@ class Node(BaseModel):
         if self.zone == "priority":
             return 0.5
         return 1
+
+    def get_colored_name(self) -> str:
+        dict_color = get_dict_color()
+
+        if self.color is not None and self.color in dict_color:
+            return f"{dict_color[self.color]}{self.name}{dict_color["reset"]}"
+        else:
+            return self.name
 
     # +---------------------------------------------------------------------+
     # |                            lst drones                               |

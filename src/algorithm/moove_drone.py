@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 16:49:54 by alebaron                                #
-# @update   : 2026/03/25 14:03:23 by alebaron                                #
+# @update   : 2026/03/26 10:54:43 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -52,7 +52,7 @@ def find_the_way(fly: FlyinManager) -> None:
                 if restricted_node is not None and restricted_node.add_drone(drone) is True:
                     mooved_drone.add(drone)
                     connexion.lst_drones.remove(drone)
-                    str_print += f"{drone.name}-{restricted_node.name} "
+                    str_print += f"{drone.name}-{restricted_node.get_colored_name()} "
                     # Réinitialiser les flags
                     drone.is_on_connection = False
                     drone.waiting_connection_nodes = None
@@ -105,7 +105,7 @@ def find_the_way(fly: FlyinManager) -> None:
                 if next_node.add_drone(drone) is True:
                     mooved_drone.add(drone)
                     node.lst_drones.remove(drone)
-                    str_print += f"{drone.name}-{next_node.name} "
+                    str_print += f"{drone.name}-{next_node.get_colored_name()} "
 
             # Ajout des voisins de la node dans la queue
 
@@ -125,7 +125,6 @@ def find_the_way(fly: FlyinManager) -> None:
 
         print(f"Turn n°{nb_turn}: {str_print}")
         nb_turn += 1
-
 
 
 def debug_print_path(path: list[Node]) -> None:
