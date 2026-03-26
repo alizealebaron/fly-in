@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 0026/03/06 13:12:14 by lebaron                                 #
-# @update   : 2026/03/26 11:59:44 by alebaron                                #
+# @update   : 2026/03/26 12:08:36 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,6 +18,12 @@
 # +-------------------------------------------------------------------------+
 
 def get_dict_color() -> dict[str, str]:
+    """
+    Get a dictionary of colors.
+
+    Returns:
+        dict[str, str]: A dictionary of colors.
+    """
 
     return {
         "red": "\033[31m",

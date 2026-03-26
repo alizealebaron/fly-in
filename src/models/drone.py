@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:20:11 by alebaron                                #
-# @update   : 2026/03/26 11:37:11 by alebaron                                #
+# @update   : 2026/03/26 12:14:15 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -42,9 +42,13 @@ class Drone(BaseModel):
     # +---------------------------------------------------------------------+
 
     def __eq__(self, other: object) -> bool:
+        """Override the default equality method to compare drones
+        by their name."""
+
         if not isinstance(other, Drone):
             return False
         return self.name == other.name
 
     def __hash__(self) -> int:
+        """Override the default hash method to make drones hashable"""
         return hash(self.name)

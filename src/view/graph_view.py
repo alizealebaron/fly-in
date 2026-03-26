@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/06 13:02:33 by alebaron                                #
-# @update   : 2026/03/26 11:15:46 by alebaron                                #
+# @update   : 2026/03/26 12:08:03 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -29,6 +29,13 @@ import networkx as nx
 # +-------------------------------------------------------------------------+
 
 def show_graph(flyinManager: FlyinManager, filename: str) -> None:
+    """
+    Show the graph of the flyinManager.
+
+    Args:
+        flyinManager (FlyinManager): The flyinManager to show.
+        filename (str): The name of the file to show in the title.
+    """
 
     # === Recovery of flyinManager data ===
 

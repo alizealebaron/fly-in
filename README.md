@@ -9,9 +9,9 @@
 
 <div align="center">
   <p>
-      <img src="https://img.shields.io/github/languages/count/alizealebaron/a_maze_ing?style=for-the-badge&logo=" />
-      <img src="https://img.shields.io/github/languages/top/alizealebaron/a_maze_ing?style=for-the-badge" />
-      <img src="https://img.shields.io/github/last-commit/alizealebaron/a_maze_ing?style=for-the-badge" />
+      <img src="https://img.shields.io/github/languages/count/alizealebaron/fly-in?style=for-the-badge&logo=" />
+      <img src="https://img.shields.io/github/languages/top/alizealebaron/fly-in?style=for-the-badge" />
+      <img src="https://img.shields.io/github/last-commit/alizealebaron/fly-in?style=for-the-badge" />
   </p>
 </div>
 

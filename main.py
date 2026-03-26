@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 13:01:33 by alebaron                                #
-# @update   : 2026/03/26 10:55:30 by alebaron                                #
+# @update   : 2026/03/26 12:06:58 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -35,6 +35,10 @@ except Exception:
 # +-------------------------------------------------------------------------+
 
 def main() -> None:
+    """
+    Main function of the program. It parses the data, finds a solution and
+    shows the graph.
+    """
 
     # === Get Main arguments ===
 

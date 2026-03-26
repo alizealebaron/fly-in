@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 16:49:54 by alebaron                                #
-# @update   : 2026/03/26 11:57:16 by alebaron                                #
+# @update   : 2026/03/26 12:25:36 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -29,6 +29,20 @@ from src.algorithm.dijkstra import calcule_path
 # +-------------------------------------------------------------------------+
 
 def find_the_way(fly: FlyinManager) -> None:
+    """
+    Move the drones from their starting position to the end hub using
+    Dijkstra's algorithm to find the shortest path for each drone.
+
+    It will print the movements of the drones at each turn until all drones
+    are on the end hub.
+
+    The path is calculated for each drone at each turn to take into
+    account the dynamic changes of the graph (drones moving, connections
+    being used, etc.).
+
+    Args:
+        fly (FlyinManager): The flyin manager containing the graph and drones.
+    """
 
     nb_turn = 1
 
@@ -146,6 +160,9 @@ def find_the_way(fly: FlyinManager) -> None:
 
 
 def debug_print_path(path: list[Node]) -> None:
+    """
+    Debug function to print the path of nodes.
+    """
 
     rendu = " -> ".join([obj.name for obj in path])
     print(rendu)

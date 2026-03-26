@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/26 12:00:01 by alebaron                                #
+# @update   : 2026/03/26 12:23:10 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -47,9 +47,11 @@ class Node(BaseModel):
     # +---------------------------------------------------------------------+
 
     def get_coord(self) -> tuple[int, int]:
+        """Get the coordinates of the node."""
         return (self.x, self.y)
 
     def get_weight(self) -> float:
+        """Get the weight of the node based on its zone type."""
         if self.zone == "restricted":
             return 2
         if self.zone == "priority":
@@ -57,6 +59,7 @@ class Node(BaseModel):
         return 1
 
     def get_colored_name(self) -> str:
+        """Get the colored name of the node based on its color attribute."""
         dict_color = get_dict_color()
 
         if self.color is not None and self.color in dict_color:
@@ -69,6 +72,16 @@ class Node(BaseModel):
     # +---------------------------------------------------------------------+
 
     def add_drone(self, drone: Drone) -> bool:
+        """
+        Add a drone to this node if there is enough capacity
+        and the zone is not blocked.
+
+        Args:
+            drone (Drone): The drone to add.
+
+        Returns:
+            bool: True if the drone was added, False otherwise.
+        """
         if len(self.lst_drones) < self.max_drones and self.zone != "blocked":
             self.lst_drones.append(drone)
             return True
@@ -79,6 +92,7 @@ class Node(BaseModel):
     # +---------------------------------------------------------------------+
 
     def is_completed(self) -> bool:
+        """Check if the node has reached its maximum drone capacity."""
         return (self.max_drones == len(self.lst_drones))
 
     # +---------------------------------------------------------------------+
@@ -86,9 +100,14 @@ class Node(BaseModel):
     # +---------------------------------------------------------------------+
 
     def __eq__(self, other: object) -> bool:
+        """Override the default equality method to compare nodes
+        by their name."""
+
         if not isinstance(other, Node):
             return False
         return self.name == other.name
 
     def __hash__(self) -> int:
+        """Override the default hash method to make nodes hashable"""
+
         return hash(self.name)

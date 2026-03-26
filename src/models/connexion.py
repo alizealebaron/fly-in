@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:52:25 by alebaron                                #
-# @update   : 2026/03/26 11:17:31 by alebaron                                #
+# @update   : 2026/03/26 12:13:20 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -43,6 +43,13 @@ class Connexion(BaseModel):
     # +---------------------------------------------------------------------+
 
     def get_lst_drones(self) -> list[Drone]:
+        """
+        Get the list of drones on this connexion.
+
+        Returns:
+            list[Drone]: The list of drones on this connexion.
+        """
+
         return self.lst_drones
 
     # +---------------------------------------------------------------------+
@@ -50,6 +57,16 @@ class Connexion(BaseModel):
     # +---------------------------------------------------------------------+
 
     def add_drone(self, drone: Drone) -> bool:
+        """
+        Add a drone to this connexion if there is enough capacity.
+
+        Args:
+            drone (Drone): The drone to add.
+
+        Returns:
+            bool: True if the drone was added, False otherwise.
+        """
+
         if len(self.lst_drones) < self.max_link_capacity:
             self.lst_drones.append(drone)
             return True

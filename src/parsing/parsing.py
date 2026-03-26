@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/26 11:57:16 by alebaron                                #
+# @update   : 2026/03/26 12:12:31 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -32,6 +32,15 @@ from typing import Any, Optional
 
 
 def parsing_data(filename: str) -> FlyinManager:
+    """
+    Parse the data from the file and return a flyinManager.
+
+    Args:
+        filename (str): The path to the file to parse.
+
+    Returns:
+        FlyinManager: The flyinManager containing the data from the file.
+    """
 
     # === Checking if the file can be read ===
 
@@ -75,6 +84,18 @@ def parsing_data(filename: str) -> FlyinManager:
 # +-------------------------------------------------------------------------+
 
 def get_data(filename: str) -> FlyinManager:
+    """
+    Get the data from the file and return a flyinManager.
+
+    Args:
+        filename (str): The path to the file to parse.
+
+    Returns:
+        FlyinManager: The flyinManager containing the data from the file.
+
+    Raises:
+        ParsingError: If there is an error in the parsing of the file.
+    """
 
     # === Get the contents of the file ===
 
@@ -194,6 +215,17 @@ def check_file(filename: str) -> None:
 
 def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
                                meta_data: list[str]) -> None:
+    """
+    Check the validity of the connexion and create it if it's valid.
+
+    Args:
+        flyingManager (FlyinManager): The flyinManager to add the connexion to.
+        line (list[str]): The line containing the connexion data.
+        meta_data (list[str]): The list of meta_data for the connexion.
+
+    Raises:
+        ParsingError: If the connexion is invalid.
+    """
 
     lst_node = line[1].split("-")
 
@@ -258,6 +290,17 @@ def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
 
 def check_and_create_node(flyingManager: FlyinManager, line: list[str],
                           meta_data: list[str]) -> None:
+    """
+    Check the validity of the node and create it if it's valid.
+
+    Args:
+        flyingManager (FlyinManager): The flyinManager to add the node to.
+        line (list[str]): The line containing the node data.
+        meta_data (list[str]): The list of meta_data for the node.
+
+    Raises:
+        ParsingError: If the node is invalid.
+    """
 
     # === Checking for multiple start & end hub and incorrect hub ===
 
@@ -346,4 +389,12 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
 
 
 def exit_parsing_error(message: str, nb_ligne: int) -> None:
+    """
+    Exit the program with a parsing error message.
+
+    Args:
+        message (str): The error message to display.
+        nb_ligne (int): The line number where the error occurred.
+    """
+
     exit_error(ParsingError(), message + f" [Line {nb_ligne}]")

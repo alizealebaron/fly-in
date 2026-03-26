@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 12:33:58 by alebaron                                #
-# @update   : 2026/03/26 11:57:16 by alebaron                                #
+# @update   : 2026/03/26 12:24:10 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -29,6 +29,17 @@ from src.models.flyinManager import FlyinManager
 # +-------------------------------------------------------------------------+
 
 def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
+    """
+    Calculate the shortest path from start to end using Dijkstra's algorithm.
+
+    Args:
+        flyin (FlyinManager): The flyin manager containing the graph.
+        start (Node): The starting node.
+        end (Node): The ending node.
+
+    Returns:
+        list[Node]: The shortest path from start to end.
+    """
 
     # Initialize a new queue
     priority_queue: list[tuple[float, int, Node]] = []
@@ -79,6 +90,16 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
 
 
 def get_neighbours(node: Node, lst_connections: list[Connexion]) -> set[Node]:
+    """
+    Get the neighbors of a node based on the connections.
+
+    Args:
+        node (Node): The node to get the neighbors of.
+        lst_connections (list[Connexion]): The list of connections to use.
+
+    Returns:
+        set[Node]: The set of neighboring nodes.
+    """
 
     lst_neighbours = set()
 
