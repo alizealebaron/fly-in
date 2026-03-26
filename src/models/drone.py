@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:20:11 by alebaron                                #
-# @update   : 2026/03/25 13:50:20 by alebaron                                #
+# @update   : 2026/03/26 11:37:11 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -41,10 +41,10 @@ class Drone(BaseModel):
     # |                             Hashable                                |
     # +---------------------------------------------------------------------+
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Drone):
             return False
         return self.name == other.name
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.name)

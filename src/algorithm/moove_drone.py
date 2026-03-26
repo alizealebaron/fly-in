@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 16:49:54 by alebaron                                #
-# @update   : 2026/03/26 11:29:31 by alebaron                                #
+# @update   : 2026/03/26 11:57:16 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -32,7 +32,10 @@ def find_the_way(fly: FlyinManager) -> None:
 
     nb_turn = 1
 
-    while len(fly.get_endHub().lst_drones) != fly.get_nbDrones():
+    end_hub = fly.get_endHub()
+    assert end_hub is not None, "End hub must be defined"
+
+    while len(end_hub.lst_drones) != fly.get_nbDrones():
 
         str_print = ""
         mooved_drone = set()
@@ -44,6 +47,9 @@ def find_the_way(fly: FlyinManager) -> None:
         for connexion in fly.get_listConnexion():
             for drone in connexion.lst_drones.copy():
                 if drone in mooved_drone:
+                    continue
+
+                if drone.next_restricted_node is None:
                     continue
 
                 restricted_node = fly.get_node_by_name(
@@ -68,9 +74,9 @@ def find_the_way(fly: FlyinManager) -> None:
 
         checked_node = set()
         count = 0
-        priority_queue = []
+        priority_queue: list[tuple[int, Node]] = []
 
-        heapq.heappush(priority_queue, (count, fly.get_endHub()))
+        heapq.heappush(priority_queue, (count, end_hub))
 
         # Pathing through nodes to move all the drones
         while priority_queue:
@@ -82,7 +88,7 @@ def find_the_way(fly: FlyinManager) -> None:
                 if drone in mooved_drone:
                     continue
 
-                path = calcule_path(fly, node, fly.get_endHub())
+                path = calcule_path(fly, node, end_hub)
 
                 # In case of there is no solution for this turn
                 if len(path) == 1:
@@ -92,20 +98,22 @@ def find_the_way(fly: FlyinManager) -> None:
 
                 # Case 1: The next node is a restricted area
                 if next_node.zone == "restricted":
-                    connexion = fly.get_connexion_between(node, next_node)
+                    connexion_opt = fly.get_connexion_between(node, next_node)
 
-                    if (connexion is not None and
-                       connexion.add_drone(drone) is True):
+                    if (connexion_opt is not None and
+                       connexion_opt.add_drone(drone) is True):
+                        connexion = connexion_opt
 
                         mooved_drone.add(drone)
                         node.lst_drones.remove(drone)
 
                         drone.is_on_connection = True
-                        drone.waiting_connection_nodes = (node.name,
-                                                          next_node.name)
+                        drone.waiting_connection_nodes = (
+                            node.name, next_node.name)
                         drone.next_restricted_node = next_node.name
-                        str_print += f"{drone.name}-({connexion.node1.name}-"
-                        str_print += f"{connexion.node2.name}) "
+                        str_print += (f"{drone.name}-"
+                                      f"({connexion_opt.node1.name}-")
+                        str_print += f"{connexion_opt.node2.name}) "
                     continue
 
                 # Case 2: Normal movement

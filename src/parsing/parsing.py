@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/02 12:26:40 by alebaron                                #
-# @update   : 2026/03/26 11:17:11 by alebaron                                #
+# @update   : 2026/03/26 11:57:16 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -24,6 +24,7 @@ from src.models.connexion import Connexion
 from src.models.flyinManager import FlyinManager
 from src.models.node import Node
 import re
+from typing import Any, Optional
 
 # +-------------------------------------------------------------------------+
 # |                             Main Function                               |
@@ -45,18 +46,24 @@ def parsing_data(filename: str) -> FlyinManager:
     if (fly.get_startHub() is None or fly.get_endHub() is None):
         exit_parsing_error("The start hub or end hub is missing.", 0)
 
+    # === Get the hubs with type safety ===
+    start_hub = fly.get_startHub()
+    end_hub = fly.get_endHub()
+    assert start_hub is not None, "Start hub must exist"
+    assert end_hub is not None, "End hub must exist"
+
     # === Check that there is a path between the start and the end ===
 
-    path = calcule_path(fly, fly.get_startHub(), fly.get_endHub())
+    path = calcule_path(fly, start_hub, end_hub)
 
-    if (fly.get_startHub() not in path):
+    if (start_hub not in path):
         exit_parsing_error("There is no path between the start and the "
                            "end.", 0)
 
     # === Put the drone on the start hub ===
 
     for drone in fly.get_listDrone():
-        fly.get_startHub().add_drone(drone)
+        start_hub.add_drone(drone)
 
     # === Return the data with a flyinManager ===
 
@@ -67,7 +74,7 @@ def parsing_data(filename: str) -> FlyinManager:
 # |                          Important functions                            |
 # +-------------------------------------------------------------------------+
 
-def get_data(filename) -> FlyinManager:
+def get_data(filename: str) -> FlyinManager:
 
     # === Get the contents of the file ===
 
@@ -76,7 +83,7 @@ def get_data(filename) -> FlyinManager:
 
     # === Initialisation of important variables ===
 
-    flyinManager = None
+    flyinManager: Optional[FlyinManager] = None
     num_line = 1
 
     # === Reading lines one by one ===
@@ -132,6 +139,7 @@ def get_data(filename) -> FlyinManager:
         # == Try to create a node or a connexion ==
 
         try:
+            assert flyinManager is not None, "FlyinManager not initialized"
             if ("hub" in line_split[0]):
                 check_and_create_node(flyinManager, line_split, meta_data)
             elif ("connection" in line_split[0]):
@@ -144,6 +152,7 @@ def get_data(filename) -> FlyinManager:
         # == Moving on the next line ==
         num_line += 1
 
+    assert flyinManager is not None, "FlyinManager not initialized"
     return flyinManager
 
 
@@ -207,7 +216,10 @@ def check_and_create_connexion(flyingManager: FlyinManager, line: list[str],
     node1 = flyingManager.get_node_by_name(lst_node[0])
     node2 = flyingManager.get_node_by_name(lst_node[1])
 
-    connexion_data = {
+    assert node1 is not None, f"Zone {lst_node[0]} should exist"
+    assert node2 is not None, f"Zone {lst_node[1]} should exist"
+
+    connexion_data: dict[str, Any] = {
         "node1": node1,
         "node2": node2,
         "lst_drones": []
@@ -281,10 +293,10 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
 
     # == Initilisation of first validated data ==
 
-    node_data = {
+    node_data: dict[str, Any] = {
         "name": line[1],
-        "x": line[2],
-        "y": line[3],
+        "x": int(line[2]),
+        "y": int(line[3]),
         "lst_drones": []
     }
 
@@ -304,7 +316,7 @@ def check_and_create_node(flyingManager: FlyinManager, line: list[str],
                 else:
                     raise ParsingError(f"Invalid type of zone ({data}).")
             elif (data.startswith("max_drones")):
-                node_data["max_drones"] = data_split[1]
+                node_data["max_drones"] = int(data_split[1])
             else:
                 raise ParsingError(f"Invalid meta_data name ({data}).")
         else:

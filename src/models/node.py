@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/26 11:18:57 by alebaron                                #
+# @update   : 2026/03/26 12:00:01 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -38,15 +38,15 @@ class Node(BaseModel):
     x: int
     y: int
     color: Optional[str] = Field(None, min_length=1)
-    zone: Optional[str] = Field(default="normal", min_length=1)
-    max_drones: Optional[int] = Field(default=1, ge=0)
+    zone: str = Field(default="normal", min_length=1)
+    max_drones: int = Field(default=1, ge=0)
     lst_drones: list[Drone]
 
     # +---------------------------------------------------------------------+
     # |                              Getter                                 |
     # +---------------------------------------------------------------------+
 
-    def get_coord(self) -> tuple:
+    def get_coord(self) -> tuple[int, int]:
         return (self.x, self.y)
 
     def get_weight(self) -> float:
@@ -85,10 +85,10 @@ class Node(BaseModel):
     # |                             Hashable                                |
     # +---------------------------------------------------------------------+
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Node):
             return False
         return self.name == other.name
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.name)

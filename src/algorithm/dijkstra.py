@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 12:33:58 by alebaron                                #
-# @update   : 2026/03/26 11:20:14 by alebaron                                #
+# @update   : 2026/03/26 11:57:16 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -31,11 +31,13 @@ from src.models.flyinManager import FlyinManager
 def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
 
     # Initialize a new queue
-    priority_queue = []
+    priority_queue: list[tuple[float, int, Node]] = []
 
     # Initialize the nodes with infinite distance
     dict_distances = {node.name: float('inf') for node in flyin.get_listNode()}
-    dict_parent = {node.name: None for node in flyin.get_listNode()}
+    dict_parent: dict[str, Node | None] = {
+        node.name: None for node in flyin.get_listNode()
+    }
 
     # Set the distance of the starting node to 0
     dict_distances[start.name] = 0
@@ -68,8 +70,8 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
                 heapq.heappush(priority_queue, (new_dist, count, neighbor))
 
     # Get the path from start to the end
-    path = []
-    curr = end
+    path: list[Node] = []
+    curr: Node | None = end
     while curr is not None:
         path.append(curr)
         curr = dict_parent.get(curr.name)

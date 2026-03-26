@@ -21,7 +21,6 @@
 from pydantic import BaseModel, Field
 from src.models.node import Node
 from src.models.drone import Drone
-from typing import Optional
 
 
 # +-------------------------------------------------------------------------+
@@ -36,7 +35,7 @@ class Connexion(BaseModel):
 
     node1: Node
     node2: Node
-    max_link_capacity: Optional[int] = Field(default=1, ge=1)
+    max_link_capacity: int = Field(default=1, ge=1)
     lst_drones: list[Drone]
 
     # +---------------------------------------------------------------------+

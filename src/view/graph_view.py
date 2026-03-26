@@ -48,8 +48,11 @@ def show_graph(flyinManager: FlyinManager, filename: str) -> None:
         pos[node.name] = (node.x, node.y)
 
         try:
-            mcolors.to_rgba(node.color)
-            node_colors.append(node.color)
+            if node.color is not None:
+                mcolors.to_rgba(node.color)
+                node_colors.append(node.color)
+            else:
+                node_colors.append("skyblue")
         except (ValueError, TypeError):
             node_colors.append("skyblue")
 

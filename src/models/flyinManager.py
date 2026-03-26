@@ -22,6 +22,7 @@ from src.models.node import Node
 from src.models.drone import Drone
 from src.models.connexion import Connexion
 import random
+from typing import Optional
 
 
 # +-------------------------------------------------------------------------+
@@ -34,11 +35,11 @@ class FlyinManager():
     # |                            Constructor                              |
     # +---------------------------------------------------------------------+
 
-    def __init__(self, nb_drones: int):
+    def __init__(self, nb_drones: int) -> None:
 
         self.__nb_drones = nb_drones
-        self.__start_hub = None
-        self.__end_hub = None
+        self.__start_hub: Optional[Node] = None
+        self.__end_hub: Optional[Node] = None
         self.__list_node: list[Node] = []
         self.__list_drone: list[Drone] = []
         self.__lst_connexion: list[Connexion] = []
@@ -53,10 +54,10 @@ class FlyinManager():
     def get_nbDrones(self) -> int:
         return self.__nb_drones
 
-    def get_startHub(self) -> Node:
+    def get_startHub(self) -> Optional[Node]:
         return self.__start_hub
 
-    def get_endHub(self) -> Node:
+    def get_endHub(self) -> Optional[Node]:
         return self.__end_hub
 
     def get_listNode(self) -> list[Node]:
