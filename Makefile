@@ -7,10 +7,10 @@
 #                                                                            #
 # ************************************************************************** #
 # @name   : Makefile                                                         #
-# @author : alebaron <alebaron@student.42lehavre.fr>                         #
+# @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/02/26 13:44:26 by alebaron                                #
+# @update   : 2026/03/27 10:12:13 by alebaron                                #
 # ************************************************************************** #
 
 # ==========================
@@ -30,7 +30,7 @@ MYPY_FLAGS = --warn-return-any --warn-unused-ignores --ignore-missing-imports \
 			 --disallow-untyped-defs --check-untyped-defs
 
 NAME = fly-in
-CONFIG = default_config.txt
+FILE = maps/easy/01_linear_path.txt
 SRC_FILES = main.py \
 			src/
 
@@ -64,17 +64,17 @@ PINK 	:= \033[35m
 #           Rules
 # ==========================
 
-# Install the Python packages used in a_maze_ing
+# Install the Python packages used in fly-in
 install:
 	@echo "$(CYAN)Installing ${NAME} packages...$(RESET)"
 	@$(PIP) install poetry
 	@$(VENV_POETRY) install
 	@echo "$(GREEN)✅ Packages installed !$(RESET)"
 
-# Run the main file of a_maze_ing in debug mode
+# Run the main file of fly-in in debug mode
 debug:
 	@echo "$(YELLOW)Running in DEBUG mode$(RESET)"
-	@$(PY_PATH) $(PYTHON) -m pdb a_maze_ing.py
+	@$(PY_PATH) $(PYTHON) -m pdb main.py
 
 # Cleaning up all unnecessary Python files
 clean :
@@ -84,9 +84,9 @@ clean :
 	@rm -rf .pytest_cache
 	@rm -rf .coverage
 
-# Run the main file of a_maze_ing
-run : a_maze_ing.py
-	@python3 a_maze_ing.py $(CONFIG)
+# Run the main file of fly-in
+run : main.py
+	@python3 main.py $(FILE)
 
 # Install the virtual environment.
 venv:
