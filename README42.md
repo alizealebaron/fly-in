@@ -20,7 +20,7 @@ The primary objective of Fly-In is to efficiently coordinate multiple drones fro
 - **Intelligent Pathfinding**: Uses Dijkstra's algorithm with dynamic recalculation to find optimal paths for each drone
 - **Constraint Management**: Handles complex capacity constraints and zone type restrictions
 - **Multi-Agent Coordination**: Manages simultaneous movement of multiple drones with collision avoidance
-- **Visual Representation**: Generates graph visualizations using NetworkX and Matplotlib to display network topology
+- **Visual Representation**: Generates graph visualizations using arcade to display network topology
 - **Comprehensive Testing**: Includes test maps ranging from simple linear paths to impossible challenges with 25 drones
 - **Robust Error Handling**: Extensive validation of input files with detailed error reporting for 20+ error types
 
@@ -121,7 +121,7 @@ Map files define the network topology in plain text format:
 
 The program outputs:
 1. **Console output**: Turn-by-turn drone movements showing which drones moved where
-2. **Graph visualization**: NetworkX graph displayed with matplotlib showing:
+2. **Graph visualization**: Arcade showing:
    - Zones as colored nodes
    - Connections as edges
    - Zone positions based on x,y coordinates from the file
@@ -192,7 +192,7 @@ if new_dist < dict_distances[neighbor.name] and
 
 ### Graph Visualization System
 
-The project includes a sophisticated visualization module using NetworkX and Matplotlib:
+The project includes a sophisticated visualization module using arcade:
 
 #### 1. **Network Topology Display**
 
@@ -233,8 +233,8 @@ The visualization preserves spatial relationships from the input file:
 - [Dijkstra's Algorithm - Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 
 #### Python Graph Libraries
-- [NetworkX Documentation](https://networkx.org/) - Graph creation
-- [Matplotlib Visualization](https://matplotlib.org/) - Graph rendering
+
+- [Arcade Documentation](https://api.arcade.academy/en/stable/index.html) - Graphic View
 - [Pydantic Data Validation](https://docs.pydantic.dev/) - Type-safe data handling
 
 #### Other Fly-in project
@@ -261,32 +261,34 @@ The visualization preserves spatial relationships from the input file:
 
 ```
 fly-in/
-├── main.py                 # Entry point for the application
-├── pyproject.toml          # Poetry project configuration
-├── Makefile                # Build automation
-├── README42.md             # Original 42 project requirements
+├── main.py                   # Entry point for the application
+├── pyproject.toml            # Poetry project configuration
+├── Makefile                  # Build automation
+├── README42.md               # Original 42 project requirements
 ├── maps/                   
-│   ├── easy/               # Simple test cases (linear, fork, basic capacity)
-│   ├── medium/             # Intermediate cases (dead ends, loops, priorities)
-│   ├── hard/               # Advanced cases (mazes, extreme capacity)
-│   ├── challenger/         # Extreme challenges (25 drones)
-│   └── invalid/            # Error case testing (20+ error types)
+│   ├── easy/                 # Simple test cases (linear, fork, basic capacity)
+│   ├── medium/               # Intermediate cases (dead ends, loops, priorities)
+│   ├── hard/                 # Advanced cases (mazes, extreme capacity)
+│   ├── challenger/           # Extreme challenges (25 drones)
+│   └── invalid/              # Error case testing (20+ error types)
 └── src/
     ├── algorithm/          
-    │   ├── dijkstra.py     # Shortest path calculation
-    │   └── moove_drone.py  # Movement coordination
-    ├── models/             # Data models
+    │   ├── dijkstra.py       # Shortest path calculation
+    │   └── moove_drone.py    # Movement coordination
+    ├── models/               # Data models
     │   ├── flyinManager.py 
-    │   ├── node.py         # Zone representation
-    │   ├── connexion.py    # Connection representation
-    │   └── drone.py        # Drone representation
+    │   ├── node.py           # Zone representation
+    │   ├── connexion.py      # Connection representation
+    │   └── drone.py          # Drone representation
     ├── parsing/            
-    │   └── parsing.py      # File parser with validation
+    │   └── parsing.py        # File parser with validation
     ├── utils/              
-    │   ├── error.py        # Error handling
-    │   └── color.py        # Color utilities
+    │   ├── error.py          # Error handling
+    │   └── color.py          # Color utilities
     └── view/               
-        └── graph_view.py   # Network visualization
+        ├── graph_view.py     # Display graph windows
+        ├── graph_settings.py # Contain graph settings
+        └── game_view_.py     # Contain game class
 ```
 
 ## Testing

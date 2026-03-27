@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/27 10:21:57 by alebaron                                #
-# @update   : 2026/03/27 13:50:18 by alebaron                                #
+# @update   : 2026/03/27 14:08:29 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -21,7 +21,7 @@
 import arcade
 from src.models.flyinManager import FlyinManager
 from src.view.graph_settings import WindowSettings
-from typing import Any
+
 
 # +-------------------------------------------------------------------------+
 # |                                  Class                                  |
@@ -29,11 +29,20 @@ from typing import Any
 
 class GameView(arcade.View):
     """
-    Main application class.
+    Class representing the game view, which is responsible for rendering
+    the graph.
 
-    NOTE: Go ahead and delete the methods you don't need.
-    If you do need a method, delete the 'pass' and replace it
-    with your own code. Don't leave 'pass' in this program.
+    Attributes:
+        fly (FlyinManager): The FlyinManager instance containing the
+            graph data.
+
+    Methods:
+        __init__(self, fly: FlyinManager): Initializes the GameView
+            with the given FlyinManager instance.
+        graph_to_screen(self, x: float, y: float) -> tuple[float, float]:
+            Converts graph coordinates to screen coordinates, centering
+            the graph in the window with padding.
+        on_draw(self): Renders the graph on the screen.
     """
 
     def __init__(self, fly: FlyinManager):
@@ -56,13 +65,13 @@ class GameView(arcade.View):
         Returns:
             tuple: (screen_x, screen_y) in pixels
         """
-        PADDING = 50  # Margin from window edges
+        PADDING = 50
 
         # Calculate drawable area
         drawable_width = WindowSettings.WIDTH - 2 * PADDING
         drawable_height = WindowSettings.HEIGHT - 2 * PADDING
 
-        # Normalize coordinates to [0, 1]
+        # Calculate coordinates
         if self.max_x != self.min_x:
             norm_x = (x - self.min_x) / (self.max_x - self.min_x)
         else:
@@ -78,11 +87,6 @@ class GameView(arcade.View):
         screen_y = norm_y * drawable_height + PADDING
 
         return (screen_x, screen_y)
-
-    def reset(self):
-        """Reset the game to the initial state."""
-        # Do changes needed to restart the game here if you want to support that
-        pass
 
     def on_draw(self):
         """
@@ -101,44 +105,3 @@ class GameView(arcade.View):
         for node in self.lst_node:
             screen_x, screen_y = self.graph_to_screen(node.x, node.y)
             node.draw(screen_x, screen_y)
-
-    def on_update(self, delta_time):
-        """
-        All the logic to move, and the game logic goes here.
-        Normally, you'll call update() on the sprite lists that
-        need it.
-        """
-        pass
-
-    def on_key_press(self, key, key_modifiers):
-        """
-        Called whenever a key on the keyboard is pressed.
-
-        For a full list of keys, see:
-        https://api.arcade.academy/en/latest/arcade.key.html
-        """
-        pass
-
-    def on_key_release(self, key, key_modifiers):
-        """
-        Called whenever the user lets off a previously pressed key.
-        """
-        pass
-
-    def on_mouse_motion(self, x, y, delta_x, delta_y):
-        """
-        Called whenever the mouse moves.
-        """
-        pass
-
-    def on_mouse_press(self, x, y, button, key_modifiers):
-        """
-        Called when the user presses a mouse button.
-        """
-        pass
-
-    def on_mouse_release(self, x, y, button, key_modifiers):
-        """
-        Called when a user releases a mouse button.
-        """
-        pass

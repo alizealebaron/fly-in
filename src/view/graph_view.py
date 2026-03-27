@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/06 13:02:33 by alebaron                                #
-# @update   : 2026/03/27 11:21:17 by alebaron                                #
+# @update   : 2026/03/27 14:02:02 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -48,7 +48,6 @@ def show_graph(flyinManager: FlyinManager, filename: str) -> None:
 
     # Show GameView on screen
     window.show_view(game)
-
 
     # Start the arcade game loop
     arcade.run()

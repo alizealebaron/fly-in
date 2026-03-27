@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/27 11:07:27 by alebaron                                #
-# @update   : 2026/03/27 11:10:30 by alebaron                                #
+# @update   : 2026/03/27 14:02:06 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -25,4 +25,3 @@ class WindowSettings:
     WIDTH = 1280
     HEIGHT = 720
     TITLE = "Fly-in"
-
