@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 16:49:54 by alebaron                                #
-# @update   : 2026/03/26 12:25:36 by alebaron                                #
+# @update   : 2026/03/27 15:07:27 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -91,6 +91,7 @@ def find_the_way(fly: FlyinManager) -> None:
         priority_queue: list[tuple[int, Node]] = []
 
         heapq.heappush(priority_queue, (count, end_hub))
+        checked_node.add(end_hub)
 
         # Pathing through nodes to move all the drones
         while priority_queue:

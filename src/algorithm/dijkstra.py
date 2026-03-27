@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 12:33:58 by alebaron                                #
-# @update   : 2026/03/26 12:24:10 by alebaron                                #
+# @update   : 2026/03/27 15:18:20 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -50,6 +50,9 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
         node.name: None for node in flyin.get_listNode()
     }
 
+    # Track visited nodes to avoid reprocessing them
+    visited: set[str] = set()
+
     # Set the distance of the starting node to 0
     dict_distances[start.name] = 0
 
@@ -61,6 +64,13 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
         # Get the nearest node
         act_dist, _, act_node = heapq.heappop(priority_queue)
 
+        # Skip if this node has already been visited (processed)
+        if act_node.name in visited:
+            continue
+
+        # Mark this node as visited
+        visited.add(act_node.name)
+
         # End if we reach the end
         if act_node.name == end.name:
             break
@@ -68,13 +78,18 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
         # Update the distance dictionary
         for neighbor in get_neighbours(act_node, flyin.get_listConnexion()):
 
+            # Skip if neighbor already visited or is blocked
+            if neighbor.name in visited or neighbor.zone == "blocked":
+                continue
+
             new_dist = act_dist + neighbor.get_weight()
+            
+            # Penalize nodes that are at full capacity to avoid congestion
+            if neighbor.is_completed():
+                new_dist += 1  # Heavy penalty to discourage using full nodes
 
-            # Checking flow and distance constraints
-            if (new_dist < dict_distances[neighbor.name] and
-               neighbor.is_completed() is False and
-               neighbor.zone != "blocked"):
-
+            # Only update if we found a shorter path
+            if new_dist < dict_distances[neighbor.name]:
                 count += 1
                 dict_distances[neighbor.name] = new_dist
                 dict_parent[neighbor.name] = act_node
