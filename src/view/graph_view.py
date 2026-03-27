@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/06 13:02:33 by alebaron                                #
-# @update   : 2026/03/26 12:08:03 by alebaron                                #
+# @update   : 2026/03/27 11:21:17 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,10 +18,10 @@
 # +-------------------------------------------------------------------------+
 
 
+import arcade
 from src.models.flyinManager import FlyinManager
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
-import networkx as nx
+from src.view.game_view import GameView
+from src.view.graph_settings import WindowSettings
 
 
 # +-------------------------------------------------------------------------+
@@ -37,48 +37,18 @@ def show_graph(flyinManager: FlyinManager, filename: str) -> None:
         filename (str): The name of the file to show in the title.
     """
 
-    # === Recovery of flyinManager data ===
+    # === Initialisation of the game ===
 
-    lst_node = flyinManager.get_listNode()
-    lst_connexion = flyinManager.get_listConnexion()
+    # Create a window class.
+    window = arcade.Window(WindowSettings.WIDTH, WindowSettings.HEIGHT,
+                           WindowSettings.TITLE)
 
-    # === Initialisation of the graph ===
+    # Create and setup the GameView
+    game = GameView(flyinManager)
 
-    G = nx.Graph()
+    # Show GameView on screen
+    window.show_view(game)
 
-    pos = {}
-    node_colors = []
 
-    for node in lst_node:
-        G.add_node(node.name)
-
-        pos[node.name] = (node.x, node.y)
-
-        try:
-            if node.color is not None:
-                mcolors.to_rgba(node.color)
-                node_colors.append(node.color)
-            else:
-                node_colors.append("skyblue")
-        except (ValueError, TypeError):
-            node_colors.append("skyblue")
-
-    for connexion in lst_connexion:
-        G.add_edge(connexion.node1.name, connexion.node2.name)
-
-    plt.figure(figsize=(20, 10), dpi=100)
-
-    nx.draw(
-        G,
-        pos,
-        with_labels=True,
-        node_color=node_colors,
-        node_size=450,
-        edge_color='gray',
-        font_size=8,
-        font_weight='light'
-    )
-
-    plt.title(filename)
-
-    plt.show()
+    # Start the arcade game loop
+    arcade.run()

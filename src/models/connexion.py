@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:52:25 by alebaron                                #
-# @update   : 2026/03/26 12:13:20 by alebaron                                #
+# @update   : 2026/03/27 13:57:21 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,6 +18,8 @@
 # +-------------------------------------------------------------------------+
 
 
+from typing import Any
+import arcade
 from pydantic import BaseModel, Field
 from src.models.node import Node
 from src.models.drone import Drone
@@ -71,3 +73,20 @@ class Connexion(BaseModel):
             self.lst_drones.append(drone)
             return True
         return False
+
+    # +---------------------------------------------------------------------+
+    # |                             Graphic                                 |
+    # +---------------------------------------------------------------------+
+
+    def draw(self, start_x: int, start_y: int, end_x: int, end_y: int,
+             color: Any) -> None:
+        """
+        Draw the node on the screen using arcade at
+        the given screen coordinates.
+
+        Args:
+            screen_x (float): The x coordinate on the screen.
+            screen_y (float): The y coordinate on the screen.
+        """
+
+        arcade.draw_line(start_x, start_y, end_x, end_y, color, 2)

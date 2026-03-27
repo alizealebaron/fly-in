@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/26 12:23:10 by alebaron                                #
+# @update   : 2026/03/27 11:58:01 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -18,9 +18,10 @@
 # +-------------------------------------------------------------------------+
 
 
+import arcade
 from pydantic import BaseModel, Field
 from src.models.drone import Drone
-from src.utils.color import get_dict_color
+from src.utils.color import get_dict_color, get_arcade_defined_color
 from typing import Optional
 
 
@@ -111,3 +112,25 @@ class Node(BaseModel):
         """Override the default hash method to make nodes hashable"""
 
         return hash(self.name)
+
+    # +---------------------------------------------------------------------+
+    # |                             Graphic                                 |
+    # +---------------------------------------------------------------------+
+
+    def draw(self, screen_x: float, screen_y: float) -> None:
+        """
+        Draw the node on the screen using arcade at
+        the given screen coordinates.
+
+        Args:
+            screen_x (float): The x coordinate on the screen.
+            screen_y (float): The y coordinate on the screen.
+        """
+
+        color = get_arcade_defined_color(self.color)
+
+        if color is not None:
+            arcade.draw_ellipse_filled(screen_x, screen_y, 30, 30, color)
+        else:
+            arcade.draw_ellipse_filled(screen_x, screen_y, 30, 30,
+                                       arcade.color.AMARANTH_PINK)

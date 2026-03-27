@@ -10,12 +10,22 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 0026/03/06 13:12:14 by lebaron                                 #
-# @update   : 2026/03/26 12:08:36 by alebaron                                #
+# @update   : 2026/03/27 11:56:33 by alebaron                                #
 # ************************************************************************** #
+
+# +-------------------------------------------------------------------------+
+# |                                 Import                                  |
+# +-------------------------------------------------------------------------+
+
+
+import arcade
+from typing import Any
+
 
 # +-------------------------------------------------------------------------+
 # |                                 Method                                  |
 # +-------------------------------------------------------------------------+
+
 
 def get_dict_color() -> dict[str, str]:
     """
@@ -48,3 +58,20 @@ def get_dict_color() -> dict[str, str]:
         "brown": "\033[38;5;130m",
         "reset": "\033[0m"
     }
+
+
+def get_arcade_defined_color(value: str) -> Any | None:
+    """
+    Check if the color is defined in arcade.
+
+    Args:
+        value (str): The color to check.
+
+    Returns:
+        arcade.color | None: The color if defined, None otherwise.
+    """
+
+    if hasattr(arcade.color, value.upper()):
+        return getattr(arcade.color, value.upper())
+    else:
+        return None

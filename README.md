@@ -261,8 +261,7 @@ The visualization preserves spatial relationships from the input file:
 - [Dijkstra's Algorithm - Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 
 #### Python Graph Libraries
-- [NetworkX Documentation](https://networkx.org/) - Graph creation
-- [Matplotlib Visualization](https://matplotlib.org/) - Graph rendering
+- [Arcade Documentation](https://api.arcade.academy/en/stable/index.html) - Graphic View
 - [Pydantic Data Validation](https://docs.pydantic.dev/) - Type-safe data handling
 
 #### Other Fly-in project

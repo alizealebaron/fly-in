@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/27 13:53:46 by alebaron                                #
-# @update   : 2026/03/26 12:21:26 by alebaron                                #
+# @update   : 2026/03/27 11:24:49 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -179,6 +179,30 @@ class FlyinManager():
                 max_y = node.y
 
         return (max_x, max_y)
+
+    def get_node_min_coord(self) -> tuple[int, int] | None:
+        """
+        Get the minimum coordinates (x, y) among all nodes.
+
+        Returns:
+            tuple[int, int] | None: The minimum coordinates (x, y)
+                among all nodes, or None if the list is empty.
+        """
+
+        if (len(self.__list_node) == 0):
+            return None
+
+        min_x = self.__list_node[0].x
+        min_y = self.__list_node[0].y
+
+        for node in self.__list_node:
+            if node.x < min_x:
+                min_x = node.x
+
+            if node.y < min_y:
+                min_y = node.y
+
+        return (min_x, min_y)
 
     # +---------------------------------------------------------------------+
     # |                      list_connexions methods                        |
