@@ -7,10 +7,10 @@
 #                                                                            #
 # ************************************************************************** #
 # @name   : node.py                                                          #
-# @author : alebaron <alebaron@student.42.fr>                                #
+# @author : alebaron <alebaron@student.42lehavre.fr>                         #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/27 11:58:01 by alebaron                                #
+# @update   : 2026/03/29 17:10:01 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -64,7 +64,7 @@ class Node(BaseModel):
         dict_color = get_dict_color()
 
         if self.color is not None and self.color in dict_color:
-            return f"{dict_color[self.color]}{self.name}{dict_color["reset"]}"
+            return f"{dict_color[self.color]}{self.name}{dict_color['reset']}"
         else:
             return self.name
 
