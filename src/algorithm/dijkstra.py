@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/24 12:33:58 by alebaron                                #
-# @update   : 2026/03/27 15:18:20 by alebaron                                #
+# @update   : 2026/04/01 11:32:12 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -83,7 +83,7 @@ def calcule_path(flyin: FlyinManager, start: Node, end: Node) -> list[Node]:
                 continue
 
             new_dist = act_dist + neighbor.get_weight()
-            
+
             # Penalize nodes that are at full capacity to avoid congestion
             if neighbor.is_completed():
                 new_dist += 1  # Heavy penalty to discourage using full nodes

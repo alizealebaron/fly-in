@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 12:46:41 by alebaron                                #
-# @update   : 2026/03/27 10:12:13 by alebaron                                #
+# @update   : 2026/04/01 11:53:47 by alebaron                                #
 # ************************************************************************** #
 
 # ==========================
@@ -102,7 +102,7 @@ lint:
 
 # Checking flake8 and mypy norm in strict mode
 lint-strict:
-	@echo "$(PINK)$(BOLD)[Checking mypy and flake8 norm is strict mode]$(RESET)"
+	@echo "$(PINK)$(BOLD)[Checking mypy and flake8 norm in strict mode]$(RESET)"
 	@-flake8 ${SRC_FILES}
 	@-mypy ${SRC_FILES} $(MYPY_FLAGS) --strict
 

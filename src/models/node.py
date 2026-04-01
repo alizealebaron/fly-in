@@ -7,10 +7,10 @@
 #                                                                            #
 # ************************************************************************** #
 # @name   : node.py                                                          #
-# @author : alebaron <alebaron@student.42lehavre.fr>                         #
+# @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/02/26 14:36:30 by alebaron                                #
-# @update   : 2026/03/29 17:10:01 by alebaron                                #
+# @update   : 2026/04/01 11:48:57 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -127,7 +127,8 @@ class Node(BaseModel):
             screen_y (float): The y coordinate on the screen.
         """
 
-        color = get_arcade_defined_color(self.color)
+        color = (get_arcade_defined_color(self.color)
+                 if self.color is not None else None)
 
         if color is not None:
             arcade.draw_ellipse_filled(screen_x, screen_y, 30, 30, color)

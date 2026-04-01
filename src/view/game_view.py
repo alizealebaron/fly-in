@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 2026/03/27 10:21:57 by alebaron                                #
-# @update   : 2026/03/27 14:08:29 by alebaron                                #
+# @update   : 2026/04/01 11:52:36 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -20,6 +20,8 @@
 
 import arcade
 from src.models.flyinManager import FlyinManager
+from src.models.node import Node
+from src.models.connexion import Connexion
 from src.view.graph_settings import WindowSettings
 
 
@@ -45,14 +47,23 @@ class GameView(arcade.View):
         on_draw(self): Renders the graph on the screen.
     """
 
+    lst_node: list[Node]
+    lst_connexion: list[Connexion]
+    max_x: float
+    max_y: float
+    min_x: float
+    min_y: float
+
     def __init__(self, fly: FlyinManager):
         super().__init__()
 
         self.background_color = arcade.color.WHITE
-        self.lst_node = fly.get_listNode()
-        self.lst_connexion = fly.get_listConnexion()
-        self.max_x, self.max_y = fly.get_node_max_coord()
-        self.min_x, self.min_y = fly.get_node_min_coord()
+        self.lst_node = fly.get_listNode() or []
+        self.lst_connexion = fly.get_listConnexion() or []
+        max_coord = fly.get_node_max_coord()
+        min_coord = fly.get_node_min_coord()
+        self.max_x, self.max_y = max_coord if max_coord is not None else (0, 0)
+        self.min_x, self.min_y = min_coord if min_coord is not None else (0, 0)
 
     def graph_to_screen(self, x: float, y: float) -> tuple[float, float]:
         """
@@ -88,18 +99,21 @@ class GameView(arcade.View):
 
         return (screen_x, screen_y)
 
-    def on_draw(self):
+    def on_draw(self) -> None:
         """
         Render the screen.
         """
 
         # This command should happen before we start drawing. It will clear
-        # the screen to the background color, and erase what we drew last frame.
+        # the screen to the background color
+        # and erase what we drew last frame.
         self.clear()
 
         for connexion in self.lst_connexion:
-            start_x, start_y = self.graph_to_screen(connexion.node1.x, connexion.node1.y)
-            end_x, end_y = self.graph_to_screen(connexion.node2.x, connexion.node2.y)
+            start_x, start_y = self.graph_to_screen(connexion.node1.x,
+                                                    connexion.node1.y)
+            end_x, end_y = self.graph_to_screen(connexion.node2.x,
+                                                connexion.node2.y)
             arcade.draw_line(start_x, start_y, end_x, end_y, arcade.color.GRAY)
 
         for node in self.lst_node:

@@ -10,7 +10,7 @@
 # @author : alebaron <alebaron@student.42.fr>                                #
 #                                                                            #
 # @creation : 0026/03/06 13:12:14 by lebaron                                 #
-# @update   : 2026/03/27 11:56:33 by alebaron                                #
+# @update   : 2026/04/01 11:34:03 by alebaron                                #
 # ************************************************************************** #
 
 # +-------------------------------------------------------------------------+
@@ -60,7 +60,7 @@ def get_dict_color() -> dict[str, str]:
     }
 
 
-def get_arcade_defined_color(value: str) -> Any | None:
+def get_arcade_defined_color(value: str) -> Any:
     """
     Check if the color is defined in arcade.
 
